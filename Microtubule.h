@@ -18,7 +18,7 @@ private:
     constexpr static double GROWSPEED = 1;
     constexpr static double SHRINKSPEED = 5;
     constexpr static double P_UNBIND = 0.5;
-    constexpr static double P_CATASTROPHE = 0.04;
+    constexpr static double P_CATASTROPHE = 0.00004;
     constexpr static double P_RESCUE = 0.04;
 
 

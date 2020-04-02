@@ -4,10 +4,10 @@
 
 
 int main() {
-    std::cout << "microtubules is commited";
-    srand(1);
+    //srand(1);
     Microtubule first_mt = Microtubule();
-    Microtubule second_mt = Microtubule();
+    std::cout << "microtubules length: " << std::to_string(first_mt.get_length());
+    //Microtubule second_mt = Microtubule();
     return 0;
 }
 

@@ -53,18 +53,16 @@ CMAKE_BINARY_DIR = C:\Users\danie\CLionProjects\microtubule_polarity_simulator\c
 
 # The main recursive "all" target.
 all: CMakeFiles/microtubule_polarity_simulator.dir/all
-all: Catch2_tests/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
 clean: CMakeFiles/microtubule_polarity_simulator.dir/clean
-clean: Catch2_tests/clean
 
 .PHONY : clean
 
 # The main recursive "preinstall" target.
-preinstall: Catch2_tests/preinstall
+preinstall:
 
 .PHONY : preinstall
 
@@ -75,12 +73,12 @@ preinstall: Catch2_tests/preinstall
 CMakeFiles/microtubule_polarity_simulator.dir/all:
 	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/depend
 	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles --progress-num=3,4,5,6 "Built target microtubule_polarity_simulator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target microtubule_polarity_simulator"
 .PHONY : CMakeFiles/microtubule_polarity_simulator.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/microtubule_polarity_simulator.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles 3
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/microtubule_polarity_simulator.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/microtubule_polarity_simulator.dir/rule
@@ -94,51 +92,6 @@ microtubule_polarity_simulator: CMakeFiles/microtubule_polarity_simulator.dir/ru
 CMakeFiles/microtubule_polarity_simulator.dir/clean:
 	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/clean
 .PHONY : CMakeFiles/microtubule_polarity_simulator.dir/clean
-
-#=============================================================================
-# Directory level rules for directory Catch2_tests
-
-# Recursive "all" directory target.
-Catch2_tests/all: Catch2_tests/CMakeFiles/Catch_tests_run.dir/all
-
-.PHONY : Catch2_tests/all
-
-# Recursive "clean" directory target.
-Catch2_tests/clean: Catch2_tests/CMakeFiles/Catch_tests_run.dir/clean
-
-.PHONY : Catch2_tests/clean
-
-# Recursive "preinstall" directory target.
-Catch2_tests/preinstall:
-
-.PHONY : Catch2_tests/preinstall
-
-#=============================================================================
-# Target rules for target Catch2_tests/CMakeFiles/Catch_tests_run.dir
-
-# All Build rule for target.
-Catch2_tests/CMakeFiles/Catch_tests_run.dir/all:
-	$(MAKE) -f Catch2_tests\CMakeFiles\Catch_tests_run.dir\build.make Catch2_tests/CMakeFiles/Catch_tests_run.dir/depend
-	$(MAKE) -f Catch2_tests\CMakeFiles\Catch_tests_run.dir\build.make Catch2_tests/CMakeFiles/Catch_tests_run.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target Catch_tests_run"
-.PHONY : Catch2_tests/CMakeFiles/Catch_tests_run.dir/all
-
-# Build rule for subdir invocation for target.
-Catch2_tests/CMakeFiles/Catch_tests_run.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles 2
-	$(MAKE) -f CMakeFiles\Makefile2 Catch2_tests/CMakeFiles/Catch_tests_run.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danie\CLionProjects\microtubule_polarity_simulator\cmake-build-debug\CMakeFiles 0
-.PHONY : Catch2_tests/CMakeFiles/Catch_tests_run.dir/rule
-
-# Convenience name for target.
-Catch_tests_run: Catch2_tests/CMakeFiles/Catch_tests_run.dir/rule
-
-.PHONY : Catch_tests_run
-
-# clean rule for target.
-Catch2_tests/CMakeFiles/Catch_tests_run.dir/clean:
-	$(MAKE) -f Catch2_tests\CMakeFiles\Catch_tests_run.dir\build.make Catch2_tests/CMakeFiles/Catch_tests_run.dir/clean
-.PHONY : Catch2_tests/CMakeFiles/Catch_tests_run.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,4 +1,8 @@
 "C:\Program Files\JetBrains\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\danie\CLionProjects\microtubule_polarity_simulator
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/danie/CLionProjects/microtubule_polarity_simulator/cmake-build-debug
+CMake Error at CMakeLists.txt:8 (add_subdirectory):
+  add_subdirectory given source "Catch2_tests" which is not an existing
+  directory.
+
+
+-- Configuring incomplete, errors occurred!
+See also "C:/Users/danie/CLionProjects/microtubule_polarity_simulator/cmake-build-debug/CMakeFiles/CMakeOutput.log".

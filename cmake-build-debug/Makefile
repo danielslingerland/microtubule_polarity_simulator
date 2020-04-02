@@ -122,6 +122,46 @@ microtubule_polarity_simulator/fast:
 	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/build
 .PHONY : microtubule_polarity_simulator/fast
 
+#=============================================================================
+# Target rules for targets named Catch_tests_run
+
+# Build rule for target.
+Catch_tests_run: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 Catch_tests_run
+.PHONY : Catch_tests_run
+
+# fast build rule for target.
+Catch_tests_run/fast:
+	$(MAKE) -f Catch2_tests\CMakeFiles\Catch_tests_run.dir\build.make Catch2_tests/CMakeFiles/Catch_tests_run.dir/build
+.PHONY : Catch_tests_run/fast
+
+Catch2_tests/testMicrotubule.obj: Catch2_tests/testMicrotubule.cpp.obj
+
+.PHONY : Catch2_tests/testMicrotubule.obj
+
+# target to build an object file
+Catch2_tests/testMicrotubule.cpp.obj:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/Catch2_tests/testMicrotubule.cpp.obj
+.PHONY : Catch2_tests/testMicrotubule.cpp.obj
+
+Catch2_tests/testMicrotubule.i: Catch2_tests/testMicrotubule.cpp.i
+
+.PHONY : Catch2_tests/testMicrotubule.i
+
+# target to preprocess a source file
+Catch2_tests/testMicrotubule.cpp.i:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/Catch2_tests/testMicrotubule.cpp.i
+.PHONY : Catch2_tests/testMicrotubule.cpp.i
+
+Catch2_tests/testMicrotubule.s: Catch2_tests/testMicrotubule.cpp.s
+
+.PHONY : Catch2_tests/testMicrotubule.s
+
+# target to generate assembly for a file
+Catch2_tests/testMicrotubule.cpp.s:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/Catch2_tests/testMicrotubule.cpp.s
+.PHONY : Catch2_tests/testMicrotubule.cpp.s
+
 Microtubule.obj: Microtubule.cpp.obj
 
 .PHONY : Microtubule.obj
@@ -185,6 +225,10 @@ help:
 	@echo ... microtubule_polarity_simulator
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Catch_tests_run
+	@echo ... Catch2_tests/testMicrotubule.obj
+	@echo ... Catch2_tests/testMicrotubule.i
+	@echo ... Catch2_tests/testMicrotubule.s
 	@echo ... Microtubule.obj
 	@echo ... Microtubule.i
 	@echo ... Microtubule.s

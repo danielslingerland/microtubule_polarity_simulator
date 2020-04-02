@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
+
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/main.cpp
 iostream
 -
+cstdlib
+-
+Microtubule.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
 

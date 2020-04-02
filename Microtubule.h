@@ -27,7 +27,7 @@ public:
 
     Microtubule();
     Microtubule(double l, bool g, bool b);
-    void grow_shrink();
+    void process();
     void bind(Microtubule* host_mt, double pos);
     double get_length();
     bool is_growing();

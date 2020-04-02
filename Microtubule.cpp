@@ -3,7 +3,7 @@
 //
 
 #include "Microtubule.h"
-#include <stdlib.h>
+#include <cstdlib>
 
 Microtubule::Microtubule(){
         length = 0.0;
@@ -16,22 +16,22 @@ Microtubule::Microtubule(double l, bool g, bool b){
         growing = g;
         bound = b;
     };
-void Microtubule::grow_shrink(){
+void Microtubule::process(){
         if (!bound) {
             if (growing) {
                 length += GROWSPEED;
 
-                if(rand()/RAND_MAX < P_CATASTROPHE){
-                    growing = false
+                if(rand()/(double) RAND_MAX < P_CATASTROPHE){
+                    growing = false;
                 }
             } else {
                 length -= SHRINKSPEED;
-                if(rand()/RAND_MAX < P_RESCUE){
-                    growing = true
+                if(rand()/(double) RAND_MAX < P_RESCUE){
+                    growing = true;
                 }
             }
         }else{
-            if(rand()/RAND_MAX < P_UNBIND){
+            if(rand()/(double) RAND_MAX < P_UNBIND){
                 bound = false;
             }
 

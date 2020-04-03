@@ -8,11 +8,17 @@
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
 
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
+random
+-
+
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/main.cpp
 iostream
 -
-cstdlib
+random
 -
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
+RNG.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
 

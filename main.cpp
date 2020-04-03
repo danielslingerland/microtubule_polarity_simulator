@@ -1,16 +1,23 @@
 #include <iostream>
-#include <cstdlib>
+#include <random>
 #include "Microtubule.h"
+#include "RNG.h"
 
 
 int main() {
-    //srand(1);
-    Microtubule first_mt = Microtubule();
-    std::cout << "microtubules length: " << std::to_string(first_mt.get_length());
+    //random number generation
+
+    //std::uniform_real_distribution<> distr(0, 1); // define the range
+    //Microtubule first_mt = Microtubule();
+   // std::cout << "microtubules length: " << std::to_string(first_mt.get_length());
+    //std::uniform_real_distribution<> distr(0, 1); // define the range
     for(int i = 0; i < 100; i++) {
-        first_mt.process();
-        std::cout << "\nmicrotubules length: " << std::to_string(first_mt.get_length());
+        std::cout << dasl::distr(dasl::rng) << std::endl;
     }
+
+        //first_mt.process();
+        //std::cout << "\nmicrotubules length: " << std::to_string(first_mt.get_length());
+   // }
     //Microtubule second_mt = Microtubule();
     return 0;
 }

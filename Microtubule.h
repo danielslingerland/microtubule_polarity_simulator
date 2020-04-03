@@ -10,9 +10,9 @@ class Microtubule{
 
 private:
     double length;
-    int state;
     bool growing;
     bool bound;
+    bool right_side; // right = true, left = false
     Microtubule* host;
     double bind_pos;
     constexpr static double GROWSPEED = 1;
@@ -26,12 +26,16 @@ private:
 public:
 
     Microtubule();
-    Microtubule(double l, bool g, bool b);
-    void process();
+    Microtubule(bool r);
+    Microtubule(double l, bool g, bool b, bool r);
+    void process(double t_step);
     void bind(Microtubule* host_mt, double pos);
     double get_length();
     bool is_growing();
     bool is_bound();
+    bool is_right();
+    void check_host_length();
+
 };
 
 

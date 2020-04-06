@@ -2,23 +2,20 @@
 #include <random>
 #include "Microtubule.h"
 #include "RNG.h"
+#include "Cell.h"
 
 
 int main() {
-    //random number generation
 
-    //std::uniform_real_distribution<> distr(0, 1); // define the range
-    //Microtubule first_mt = Microtubule();
-   // std::cout << "microtubules length: " << std::to_string(first_mt.get_length());
-    //std::uniform_real_distribution<> distr(0, 1); // define the range
-    for(int i = 0; i < 100; i++) {
-        std::cout << dasl::distr(dasl::rng) << std::endl;
+    Cell cell1 = Cell(0.50);
+    for(int i = 0; i < 10000; i++) {
+        cell1.run_timestep(1);
+        if(i%1000 == 0) {
+            std::cout << cell1.get_polarity() << "    "<< cell1.get_average_lenth() << "\n";
+        }
+        //std::cout << i << "\n";
     }
 
-        //first_mt.process();
-        //std::cout << "\nmicrotubules length: " << std::to_string(first_mt.get_length());
-   // }
-    //Microtubule second_mt = Microtubule();
     return 0;
 }
 

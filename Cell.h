@@ -11,7 +11,7 @@
 class Cell {
 private:
     int N_MICROTUBULES = 1000;
-    const double SECOND_METER = 0.5;
+    const double SECOND_METER = 100000.0;
     Microtubule MiTus[1000];
     double p_right;
     double l_right;
@@ -22,6 +22,8 @@ public:
     void run_timestep(double t_step);
     double halftime(double length);
     void check_binding(int n, double t_step);
+    double get_polarity();
+    double get_average_lenth();
 
 
 };

@@ -31,13 +31,21 @@ void Cell::run_timestep(double t_step){
 
     //.............Processing growth, shrinkage, (un)binding, nucleation.............
     for(int n = 0; n < N_MICROTUBULES; n++){
+        //ONE EVENT (catstrophe, rescue, bidning, unbinding) per timestep
+
+        //growing, shrinking processes & catastrophe, rescue, unbinding events.
         MiTus[n].process(t_step);
+
+        //unbinding events as a result of host length.
+        if(MiTus[n].is_bound()){
+            MiTus[n].check_host_length(t_step);
+        }
+
+        //bidning events, just unbound microtubules cannot bind due to shrinking.
         if(MiTus[n].is_growing()) {
             check_binding(n, t_step);
         }
-        if(MiTus[n].is_bound()){
-            MiTus[n].check_host_length();
-        }
+
 
 
         if(MiTus[n].get_length() < 0){
@@ -50,9 +58,9 @@ void Cell::run_timestep(double t_step){
 void Cell::check_binding(int n, double t_step){
     double length = 0;
     if(MiTus[n].is_right()){
-        length = l_right;
-    }else{
         length = l_left;
+    }else{
+        length = l_right;
     }
     std::uniform_real_distribution<> distr_rl(0, length);
     double p_bind = 1-exp(-t_step/halftime(length));
@@ -83,4 +91,11 @@ double Cell::halftime(double length){
 
 void Cell::set_p_right(double p_r){
     p_right = p_r;
+}
+
+double Cell::get_polarity() {
+    return l_right/(l_left+l_right);
+}
+double Cell::get_average_lenth(){
+    return (l_right+l_right)/1000;
 }

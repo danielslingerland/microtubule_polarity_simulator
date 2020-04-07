@@ -8,20 +8,19 @@
 
 #include "Microtubule.h"
 
+
 class Cell {
 private:
-    int N_MICROTUBULES = 1000;
-    const double SECOND_METER = 100000.0;
-    Microtubule MiTus[1000];
-    double p_right;
+    const double SECOND_METER = 80000.0;
+    Microtubule MiTus[N_MICROTUBULES];
     double l_right;
     double l_left;
-public:
-    Cell(double p_r);
-    void set_p_right(double p_r);
-    void run_timestep(double t_step);
     double halftime(double length);
-    void check_binding(int n, double t_step);
+    void check_binding(int n);
+
+public:
+    Cell();
+    void run_timestep();
     double get_polarity();
     double get_average_lenth();
 

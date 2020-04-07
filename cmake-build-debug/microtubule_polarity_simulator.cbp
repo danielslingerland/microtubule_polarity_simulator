@@ -92,6 +92,9 @@
 		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h">
 			<Option target="microtubule_polarity_simulator"/>
 		</Unit>
+		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Parameters.h">
+			<Option target="microtubule_polarity_simulator"/>
+		</Unit>
 		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.cpp">
 			<Option target="microtubule_polarity_simulator"/>
 		</Unit>

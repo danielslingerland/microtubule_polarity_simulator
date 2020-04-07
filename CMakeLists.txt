@@ -4,4 +4,4 @@ project(microtubule_polarity_simulator)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(microtubule_polarity_simulator
-        main.cpp Microtubule.cpp Microtubule.h Cell.cpp Cell.h RNG.cpp RNG.h)
+        main.cpp Microtubule.cpp Microtubule.h Cell.cpp Cell.h RNG.cpp RNG.h Parameters.h)

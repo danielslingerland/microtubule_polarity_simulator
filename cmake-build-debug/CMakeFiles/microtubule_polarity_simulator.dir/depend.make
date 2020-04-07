@@ -4,16 +4,20 @@
 CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj: ../Cell.cpp
 CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj: ../Cell.h
 CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj: ../Microtubule.h
+CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj: ../Parameters.h
 CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj: ../RNG.h
 
 CMakeFiles/microtubule_polarity_simulator.dir/Microtubule.cpp.obj: ../Microtubule.cpp
 CMakeFiles/microtubule_polarity_simulator.dir/Microtubule.cpp.obj: ../Microtubule.h
+CMakeFiles/microtubule_polarity_simulator.dir/Microtubule.cpp.obj: ../Parameters.h
 CMakeFiles/microtubule_polarity_simulator.dir/Microtubule.cpp.obj: ../RNG.h
 
 CMakeFiles/microtubule_polarity_simulator.dir/RNG.cpp.obj: ../RNG.cpp
 CMakeFiles/microtubule_polarity_simulator.dir/RNG.cpp.obj: ../RNG.h
 
+CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj: ../Cell.h
 CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj: ../Microtubule.h
+CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj: ../Parameters.h
 CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj: ../RNG.h
 CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj: ../main.cpp
 

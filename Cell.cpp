@@ -3,25 +3,23 @@
 //
 
 #include "Cell.h"
-#include "Microtubule.h"
 #include "RNG.h"
 
-Cell::Cell(double p_r){
-    p_right = p_r;
+Cell::Cell(){
     for(int n = 0; n < N_MICROTUBULES; n++){
-        MiTus[n] = Microtubule(dasl::distr(dasl::rng) < p_right);
+        MiTus[n] = Microtubule(dasl::distr(dasl::rng) < P_RIGHT);
 
     }
 
 }
 
-void Cell::run_timestep(double t_step){
+void Cell::run_timestep(){
 
     //.............Calculating the total length of both sides......................
     l_left  = 0;
     l_right = 0;
     for(int n = 0; n < N_MICROTUBULES; n++){
-        if(MiTus[n].is_right()){
+        if(MiTus[n].get_side() == RIGHT){
             l_right += MiTus[n].get_length();
         }else{
             l_left  += MiTus[n].get_length();
@@ -34,43 +32,36 @@ void Cell::run_timestep(double t_step){
         //ONE EVENT (catstrophe, rescue, bidning, unbinding) per timestep
 
         //growing, shrinking processes & catastrophe, rescue, unbinding events.
-        MiTus[n].process(t_step);
+        MiTus[n].process();
 
-        //unbinding events as a result of host length.
-        if(MiTus[n].is_bound()){
-            MiTus[n].check_host_length(t_step);
-        }
-
-        //bidning events, just unbound microtubules cannot bind due to shrinking.
-        if(MiTus[n].is_growing()) {
-            check_binding(n, t_step);
-        }
-
-
-
-        if(MiTus[n].get_length() < 0){
-            MiTus[n] = Microtubule(dasl::distr(dasl::rng) < p_right);
+        //bidning events, unbinding events as a result of host length, deletion as result of lenght < 0
+        if(MiTus[n].get_state() == GROWING) {
+            check_binding(n);
+        }else if(MiTus[n].get_state() == BOUND){
+            MiTus[n].check_host_length();
+        }else if(MiTus[n].get_length() < 0){
+            MiTus[n] = Microtubule(dasl::distr(dasl::rng) < P_RIGHT);
         }
     }
 
 }
 
-void Cell::check_binding(int n, double t_step){
+void Cell::check_binding(int n){
     double length = 0;
-    if(MiTus[n].is_right()){
-        length = l_left;
+    if(MiTus[n].get_side() ==  RIGHT){
+        length = l_left;  //length of opposing microtubules
     }else{
-        length = l_right;
+        length = l_right; //length of opposing microtubules
     }
     std::uniform_real_distribution<> distr_rl(0, length);
-    double p_bind = 1-exp(-t_step/halftime(length));
+    double p_bind = 1-exp(-T_STEP/halftime(length));
 
     if(dasl::distr(dasl::rng) < p_bind){
         double global_pos = distr_rl(dasl::rng);
         bool searching = true;
         int s = 0;
         while(searching){
-            if(MiTus[s].is_right() != MiTus[n].is_right()) {
+            if(MiTus[s].get_side() != MiTus[n].get_side()) {
                 if (global_pos - MiTus[s].get_length() >= 0) {
                     global_pos -= MiTus[s].get_length();
                     s += 1;
@@ -81,7 +72,7 @@ void Cell::check_binding(int n, double t_step){
                 s += 1;
             }
         }
-        MiTus[n].bind(&MiTus[s], global_pos);
+        MiTus[n].bind_to_at(&MiTus[s], global_pos);
     }
 };
 
@@ -89,13 +80,10 @@ double Cell::halftime(double length){
     return SECOND_METER/length;
 }
 
-void Cell::set_p_right(double p_r){
-    p_right = p_r;
-}
 
 double Cell::get_polarity() {
     return l_right/(l_left+l_right);
 }
 double Cell::get_average_lenth(){
-    return (l_right+l_right)/1000;
+    return (l_left+l_right)/1000;
 }

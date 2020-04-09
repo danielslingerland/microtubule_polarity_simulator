@@ -16,6 +16,20 @@ C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
 
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.cpp
+iostream
+-
+fstream
+-
+FileWriter.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
+
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
+string
+-
+Microtubule.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
+
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.cpp
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
@@ -43,4 +57,10 @@ RNG.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
 Cell.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
+FileWriter.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
+string
+-
+fstream
+-
 

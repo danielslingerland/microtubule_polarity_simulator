@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.obj"
+  "CMakeFiles/microtubule_polarity_simulator.dir/FileWriter.cpp.obj"
   "CMakeFiles/microtubule_polarity_simulator.dir/Microtubule.cpp.obj"
   "CMakeFiles/microtubule_polarity_simulator.dir/RNG.cpp.obj"
   "CMakeFiles/microtubule_polarity_simulator.dir/main.cpp.obj"

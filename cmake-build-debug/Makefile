@@ -149,6 +149,33 @@ Cell.cpp.s:
 	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/Cell.cpp.s
 .PHONY : Cell.cpp.s
 
+FileWriter.obj: FileWriter.cpp.obj
+
+.PHONY : FileWriter.obj
+
+# target to build an object file
+FileWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/FileWriter.cpp.obj
+.PHONY : FileWriter.cpp.obj
+
+FileWriter.i: FileWriter.cpp.i
+
+.PHONY : FileWriter.i
+
+# target to preprocess a source file
+FileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/FileWriter.cpp.i
+.PHONY : FileWriter.cpp.i
+
+FileWriter.s: FileWriter.cpp.s
+
+.PHONY : FileWriter.s
+
+# target to generate assembly for a file
+FileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\microtubule_polarity_simulator.dir\build.make CMakeFiles/microtubule_polarity_simulator.dir/FileWriter.cpp.s
+.PHONY : FileWriter.cpp.s
+
 Microtubule.obj: Microtubule.cpp.obj
 
 .PHONY : Microtubule.obj
@@ -242,6 +269,9 @@ help:
 	@echo ... Cell.obj
 	@echo ... Cell.i
 	@echo ... Cell.s
+	@echo ... FileWriter.obj
+	@echo ... FileWriter.i
+	@echo ... FileWriter.s
 	@echo ... Microtubule.obj
 	@echo ... Microtubule.i
 	@echo ... Microtubule.s

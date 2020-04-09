@@ -86,6 +86,12 @@
 		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h">
 			<Option target="microtubule_polarity_simulator"/>
 		</Unit>
+		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.cpp">
+			<Option target="microtubule_polarity_simulator"/>
+		</Unit>
+		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h">
+			<Option target="microtubule_polarity_simulator"/>
+		</Unit>
 		<Unit filename="C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.cpp">
 			<Option target="microtubule_polarity_simulator"/>
 		</Unit>

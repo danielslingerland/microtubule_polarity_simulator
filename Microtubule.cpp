@@ -5,24 +5,30 @@
 #include "Microtubule.h"
 #include "RNG.h"
 
-
+//constructor used by Cell.h to create an empty MiTus array.
 Microtubule::Microtubule(){
     length = dasl::mt_rng() * V_GROW;
     side = RIGHT;
     state = GROWING;
 }
 
+//constructor used at initiation of Cell, side is randomly decided by cell.
 Microtubule::Microtubule(bool r){
     length = dasl::mt_rng() * V_GROW;
     side = r;
     state = GROWING;
 }
+
+//constructor used during simulation to reset microtubule if length < 0.
+// Could be replaced by a reset function if deemed better in the future.
 Microtubule::Microtubule(double l, bool r){
     length = l;
     side = r;
     state = GROWING;
 };
 
+//public function process is executed at the start of every timestep.
+//processes independend of other microtubules are placed here, processes dependend on other MTs are placed in the Cell
 void Microtubule::process(){
     min_length_t_step = length;
     t_event = 0;
@@ -53,7 +59,7 @@ void Microtubule::process(){
 
 }
 
-
+//public function to bind this microtubule to the given MT at position.
 void Microtubule::bind_to_at(Microtubule* host_mt, double pos){
         state = BOUND;
         host = host_mt;

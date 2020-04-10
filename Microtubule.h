@@ -4,7 +4,6 @@
 
 #ifndef MICROTUBULE_POLARITY_SIMULATOR_MICROTUBULE_H
 #define MICROTUBULE_POLARITY_SIMULATOR_MICROTUBULE_H
-
 #include "Parameters.h"
 class Microtubule{
 
@@ -24,7 +23,7 @@ public:
 
     Microtubule();
     Microtubule(bool r);
-    Microtubule(double l, bool g,bool r);
+    Microtubule(double l,bool r);
     void process();
     void bind_to_at(Microtubule* host_mt, double pos);
     double get_length();

@@ -7,37 +7,37 @@
 
 
 Microtubule::Microtubule(){
-    length = dasl::distr(dasl::rng) * V_GROW;
+    length = dasl::mt_rng() * V_GROW;
     side = RIGHT;
     state = GROWING;
 }
 
 Microtubule::Microtubule(bool r){
-    length = dasl::distr(dasl::rng) * V_GROW;
+    length = dasl::mt_rng() * V_GROW;
     side = r;
     state = GROWING;
 }
-Microtubule::Microtubule(double l, bool g,bool r){
+Microtubule::Microtubule(double l, bool r){
     length = l;
     side = r;
-    state = g;
+    state = GROWING;
 };
 
 void Microtubule::process(){
     min_length_t_step = length;
-
+    t_event = 0;
     if (state == GROWING) {
         length += V_GROW * T_STEP;
 
-        if(dasl::distr(dasl::rng) < P_CATASTROPHE){
-            double instant = dasl::distr(dasl::rng) * T_STEP;
+        if(dasl::mt_rng() < P_CATASTROPHE){
+            double instant = dasl::mt_rng() * T_STEP;
             length -= instant * V_GROW + (T_STEP - instant) * V_SHRINK;
             state = SHRINKING;
         }
     } else if(state == SHRINKING) {
         length -= V_SHRINK * T_STEP;
-        if(dasl::distr(dasl::rng) < P_RESCUE){
-            t_event = dasl::distr(dasl::rng) * T_STEP;
+        if(dasl::mt_rng() < P_RESCUE){
+            t_event = dasl::mt_rng() * T_STEP;
             length += t_event * V_SHRINK + (T_STEP - t_event) * V_GROW;
             min_length_t_step = length- (T_STEP - t_event) * V_GROW;
             state = GROWING;
@@ -45,7 +45,7 @@ void Microtubule::process(){
             min_length_t_step = length;
         }
     }else if(state == BOUND){
-            if(dasl::distr(dasl::rng) < P_UNBIND){
+            if(dasl::mt_rng() < P_UNBIND){
                 state = SHRINKING;
             }
     }
@@ -58,7 +58,7 @@ void Microtubule::bind_to_at(Microtubule* host_mt, double pos){
         state = BOUND;
         host = host_mt;
         bind_pos = pos;
-        length -= dasl::distr(dasl::rng) * V_GROW;
+        length -= dasl::mt_rng() * V_GROW;
 }
 
 void Microtubule::check_host_length(){
@@ -72,6 +72,8 @@ void Microtubule::check_host_length(){
     }
 
 }
+
+
 
 double Microtubule::get_length(){
         return length;
@@ -92,3 +94,5 @@ int Microtubule::get_state(){
 bool Microtubule::get_side(){
     return side;
 }
+
+

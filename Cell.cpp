@@ -28,18 +28,23 @@ void Cell::run_timestep(){
 
 
     //.............Processing growth, shrinkage, (un)binding, nucleation.............
-    for(int n = 0; n < N_MICROTUBULES; n++){
+    for(int n = 0; n < N_MICROTUBULES; n++) {
         //ONE EVENT (catstrophe, rescue, bidning, unbinding) per timestep
 
-        //growing, shrinking processes & catastrophe, rescue, unbinding events.
-        MiTus[n].process();
+        //growing, shrinking processes & catastrophe, rescue events.
+        bool event = MiTus[n].process();
 
-        //bidning events, unbinding events as a result of host length, deletion as result of lenght < 0
-        if(MiTus[n].get_state() == GROWING) {
+
+        if (MiTus[n].get_state() == GROWING and !event) {
             check_binding(n);
-        }else if(MiTus[n].get_state() == BOUND){
+        }
+    }
+    for(int n = 0; n < N_MICROTUBULES; n++){
+        if(MiTus[n].get_state() == BOUND){
             MiTus[n].check_host_length();
-        }else if(MiTus[n].get_min_length_t_step() < 0){
+        }
+
+        if(MiTus[n].get_min_length_t_step() < 0){
             double length_new_mt = (fabs(MiTus[n].get_min_length_t_step())/V_SHRINK + MiTus[n].get_t_event())*V_GROW;
             MiTus[n] = Microtubule(length_new_mt, dasl::mt_rng() < P_RIGHT);
         }

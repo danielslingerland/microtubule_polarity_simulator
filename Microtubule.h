@@ -24,7 +24,7 @@ public:
     Microtubule();
     Microtubule(bool r);
     Microtubule(double l,bool r);
-    void process();
+    bool process();
     void bind_to_at(Microtubule* host_mt, double pos);
     double get_length();
     double get_min_length_t_step();

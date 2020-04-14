@@ -1,19 +1,33 @@
 //
 // Created by danie on 8-4-2020.
 //
-#include <iostream>
-#include <fstream>
-#include "FileWriter.h"
 
+#include "FileWriter.h"
+#include <ctime>
 using namespace std;
 
 FileWriter::FileWriter(string fname) {
-    filename = "../DATA/"+fname;
+    string final_name = fname+".txt";
+    ifstream infile("../DATA/"+final_name);
+    bool exists = infile.good();
+    int count = 1;
+    while(exists){
+        count += 1;
+        final_name = fname + to_string(count)+".txt";
+        ifstream infile2("../DATA/"+final_name);
+        exists = infile2.good();
+
+    }
+
+    filename = "../DATA/"+final_name;
 }
 
 void FileWriter::writeParameters(){
+    time_t now = time(0);
+    char* dt = ctime(&now);
     ofstream myfile;
     myfile.open(filename, ios::app);
+    myfile << "simulation started writing at: " << dt;
     myfile << "T_STEP: " << T_STEP << "\n";
     myfile << "N_MICROTUBULES: " << N_MICROTUBULES << "\n";
     myfile << "R_CATASTROPHE: " << R_CATASTROPHE << "\n";

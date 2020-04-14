@@ -5,6 +5,9 @@
 #ifndef MICROTUBULE_POLARITY_SIMULATOR_FILEWRITER_H
 #define MICROTUBULE_POLARITY_SIMULATOR_FILEWRITER_H
 #include<string>
+#include <iostream>
+#include <fstream>
+#include <ctime>
 #include "Microtubule.h"
 
 class FileWriter {

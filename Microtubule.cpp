@@ -29,7 +29,7 @@ Microtubule::Microtubule(double l, bool r){
 
 //public function process is executed at the start of every timestep.
 //processes independend of other microtubules are placed here, processes dependend on other MTs are placed in the Cell
-void Microtubule::process(){
+bool Microtubule::process(){
     min_length_t_step = length;
     t_event = 0;
     if (state == GROWING) {
@@ -39,6 +39,8 @@ void Microtubule::process(){
             double instant = dasl::mt_rng() * T_STEP;
             length -= instant * V_GROW + (T_STEP - instant) * V_SHRINK;
             state = SHRINKING;
+            min_length_t_step = std::min(min_length_t_step, length);
+            return true;
         }
     } else if(state == SHRINKING) {
         length -= V_SHRINK * T_STEP;
@@ -47,14 +49,19 @@ void Microtubule::process(){
             length += t_event * V_SHRINK + (T_STEP - t_event) * V_GROW;
             min_length_t_step = length- (T_STEP - t_event) * V_GROW;
             state = GROWING;
+            return true;
         }else {
             min_length_t_step = length;
         }
-    }else if(state == BOUND){
-            if(dasl::mt_rng() < P_UNBIND){
-                state = SHRINKING;
-            }
+    }else if(state == BOUND) {
+        if(dasl::mt_rng() < P_UNBIND){
+//        length -= dasl::mt_rng() * V_SHRINK * T_STEP;
+//        min_length_t_step = length;
+            state = SHRINKING;
+            return true;
+        }
     }
+    return false;
 
 
 }
@@ -70,12 +77,14 @@ void Microtubule::bind_to_at(Microtubule* host_mt, double pos){
 void Microtubule::check_host_length(){
     if(host->get_min_length_t_step() < bind_pos){
         state = SHRINKING;
-        if(host->get_state() == GROWING){
-            length -= bind_pos - (host->get_min_length_t_step() - (T_STEP-host->get_t_event()) * V_SHRINK); //What the length would have been without rescue
-        }else if(host->get_state() == SHRINKING){
-            length -= bind_pos - host->get_length();
-        }
+//        if(host->get_state() == GROWING){
+//            length -= bind_pos - (host->get_min_length_t_step() - (T_STEP-host->get_t_event()) * V_SHRINK); //What the length would have been without rescue
+//        }else if(host->get_state() == SHRINKING){
+//            length -= bind_pos - host->get_length();
+//        }
+//        min_length_t_step = length;
     }
+
 
 }
 

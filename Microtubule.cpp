@@ -36,18 +36,18 @@ bool Microtubule::process(){
         length += V_GROW * T_STEP;
 
         if(dasl::mt_rng() < P_CATASTROPHE){
-            double instant = dasl::mt_rng() * T_STEP;
-            length -= instant * V_GROW + (T_STEP - instant) * V_SHRINK;
+            //double instant = dasl::mt_rng() * T_STEP;
+            //length -= instant * V_GROW + (T_STEP - instant) * V_SHRINK;
             state = SHRINKING;
-            min_length_t_step = std::min(min_length_t_step, length);
+            //min_length_t_step = std::min(min_length_t_step, length);
             return true;
         }
     } else if(state == SHRINKING) {
         length -= V_SHRINK * T_STEP;
         if(dasl::mt_rng() < P_RESCUE){
-            t_event = dasl::mt_rng() * T_STEP;
-            length += t_event * V_SHRINK + (T_STEP - t_event) * V_GROW;
-            min_length_t_step = length- (T_STEP - t_event) * V_GROW;
+            //t_event = dasl::mt_rng() * T_STEP;
+            //length += t_event * V_SHRINK + (T_STEP - t_event) * V_GROW;
+            //min_length_t_step = length- (T_STEP - t_event) * V_GROW;
             state = GROWING;
             return true;
         }else {

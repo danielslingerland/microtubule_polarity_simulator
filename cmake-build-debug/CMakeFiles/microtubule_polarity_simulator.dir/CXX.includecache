@@ -6,35 +6,21 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.cpp
-Cell.h
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
-RNG.h
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
-
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
-
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.cpp
-iostream
--
-fstream
--
-FileWriter.h
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
 string
 -
+iostream
+-
+fstream
+-
+ctime
+-
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
-
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.cpp
-Microtubule.h
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
-RNG.h
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
 Parameters.h
@@ -44,6 +30,8 @@ C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Parameters.h
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/RNG.h
 random
+-
+functional
 -
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/main.cpp

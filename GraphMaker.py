@@ -49,8 +49,8 @@ def m0(v_grow, v_shrink, l_bar, growing):
 testdata = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 140, 250, 300, 1, 2, 3, 4, 12, 4, 34, 23, 43]
 m_test_null = m0(0.08, 0.16, 50, True)*len(testdata)
 create_hist_fit(testdata, m_test_null, "test")
-length = read_data("MT_length.txt")
-state = read_data("MT_state.txt")
+length = read_data("MT_length2.txt")
+state = read_data("MT_state2.txt")
 
 growing_length = []
 

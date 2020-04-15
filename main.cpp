@@ -12,32 +12,26 @@
 int main() {
 
 
-    FileWriter length = FileWriter("MT_length2");
-    length.writeParameters();
-    FileWriter state = FileWriter("MT_state2");
-    state.writeParameters();
+    FileWriter polarity = FileWriter("MT_polarity");
+    polarity.writeParameters();
+//    FileWriter state = FileWriter("MT_state2");
+//    state.writeParameters();
 
     int t_max = 100000;
-    double lengths_per_timestep[N_MICROTUBULES];
-    int states_per_timestep[N_MICROTUBULES];
+//    double lengths_per_timestep[N_MICROTUBULES];
+//    int states_per_timestep[N_MICROTUBULES];
     Cell cell1 = Cell();
-    for(int i = 0; i < t_max; i++) {
+    for (int i = 0; i < t_max; i++) {
         cell1.run_timestep();
-        if(i%10000 == 0) {
-            std::cout << (double) i/ (double) t_max << "\n";
+        if (i % 10000 == 0) {
+            std::cout << (double) i / (double) t_max << "   " << cell1.get_polarity() << "\n";
         }
-        if(i > 10000) {
-
-            for (int m = 0; m < N_MICROTUBULES; m++) {
-
-                lengths_per_timestep[m] = cell1.MiTus[m].get_length();
-                states_per_timestep[m] = cell1.MiTus[m].get_state();
-            }
-            length.writeDoubleArray(lengths_per_timestep, N_MICROTUBULES);
-            state.writeIntArray(states_per_timestep, N_MICROTUBULES);
+        if (i > 50000) {
+            polarity.writeDouble(cell1.get_polarity());
         }
 
     }
+
 
     return 0;
 }

@@ -11,6 +11,7 @@ private:
     double length;
     double min_length_t_step;
     double t_event;
+    bool event;
     bool side;
     int state;
     Microtubule* host;
@@ -24,13 +25,16 @@ public:
     Microtubule();
     Microtubule(bool r);
     Microtubule(double l,bool r);
-    bool process();
+    void reset(double l,bool r);
+    void process();
     void bind_to_at(Microtubule* host_mt, double pos);
     double get_length();
     double get_min_length_t_step();
     double get_t_event();
     int get_state();
     bool get_side();
+    bool get_event();
+    void set_event(bool e);
     void check_host_length();
 
 };

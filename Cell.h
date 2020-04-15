@@ -11,15 +11,14 @@
 
 class Cell {
 private:
-    const double SECOND_METER = 80000.0;
-
     double l_right;
     double l_left;
-    double halftime(double length);
-    void check_binding(int n);
+    static double halftime(double length);
+    bool check_binding(int n);
+    Microtubule MiTus[N_MICROTUBULES];
 
 public:
-    Microtubule MiTus[N_MICROTUBULES];
+
     Cell();
     void run_timestep();
     double get_polarity();

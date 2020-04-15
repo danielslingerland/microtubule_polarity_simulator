@@ -4,7 +4,6 @@
 
 #include "RNG.h"
 #include <random>
-#include <iostream>
 #include <time.h>
 
 

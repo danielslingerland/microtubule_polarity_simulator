@@ -19,6 +19,7 @@ void Cell::run_timestep(){
     l_left  = 0;
     l_right = 0;
     for(int n = 0; n < N_MICROTUBULES; n++){
+        MiTus[n].set_event(false);
         if(MiTus[n].get_side() == RIGHT){
             l_right += MiTus[n].get_length();
         }else{
@@ -30,29 +31,35 @@ void Cell::run_timestep(){
     //.............Processing growth, shrinkage, (un)binding, nucleation.............
     for(int n = 0; n < N_MICROTUBULES; n++) {
         //ONE EVENT (catstrophe, rescue, bidning, unbinding) per timestep
-
-        //growing, shrinking processes & catastrophe, rescue events.
-        bool event = MiTus[n].process();
-
-
-        if (MiTus[n].get_state() == GROWING and !event) {
-            check_binding(n);
+        if (MiTus[n].get_state() == GROWING) {
+            bool ev =  check_binding(n);
+            MiTus[n].set_event(ev);
         }
     }
-    for(int n = 0; n < N_MICROTUBULES; n++){
-        if(MiTus[n].get_state() == BOUND){
+    for(int n = 0; n < N_MICROTUBULES; n++) {
+        //growing, shrinking processes & catastrophe, rescue events.
+        if (!MiTus[n].get_event()) {
+            MiTus[n].process();
+        }
+    }
+
+
+
+    for(int n = 0; n < N_MICROTUBULES; n++) {
+        if (MiTus[n].get_state() == BOUND) {
             MiTus[n].check_host_length();
         }
-
+    }
+    for(int n = 0; n < N_MICROTUBULES; n++) {
         if(MiTus[n].get_min_length_t_step() < 0){
             double length_new_mt = (fabs(MiTus[n].get_min_length_t_step())/V_SHRINK + MiTus[n].get_t_event())*V_GROW;
-            MiTus[n] = Microtubule(length_new_mt, dasl::mt_rng() < P_RIGHT);
+            MiTus[n].reset(length_new_mt, dasl::mt_rng() < P_RIGHT);
         }
     }
 
 }
 
-void Cell::check_binding(int n){
+bool Cell::check_binding(int n){
     double length = 0;
     if(MiTus[n].get_side() ==  RIGHT){
         length = l_left;  //length of opposing microtubules
@@ -60,7 +67,8 @@ void Cell::check_binding(int n){
         length = l_right; //length of opposing microtubules
     }
 
-    double p_bind = 1-exp(-T_STEP/halftime(length));
+    double p_bind;
+    p_bind = 1 - exp(-T_STEP / halftime(length));
 
     if(dasl::mt_rng() < p_bind){
         double global_pos = dasl::mt_rng()*length;
@@ -79,8 +87,10 @@ void Cell::check_binding(int n){
             }
         }
         MiTus[n].bind_to_at(&MiTus[s], global_pos);
+        return true;
     }
-};
+    return false;
+}
 
 double Cell::halftime(double length){
     return 1/(BINDING_PER_LENGTH_PER_TIME*length);

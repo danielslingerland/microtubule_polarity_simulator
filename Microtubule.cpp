@@ -21,17 +21,24 @@ Microtubule::Microtubule(bool r){
 
 //constructor used during simulation to reset microtubule if length < 0.
 // Could be replaced by a reset function if deemed better in the future.
-Microtubule::Microtubule(double l, bool r){
+//Microtubule::Microtubule(double l, bool r){
+//    length = l;
+//    side = r;
+//    state = GROWING;
+//};
+
+void Microtubule::reset(double l, bool r){
     length = l;
     side = r;
     state = GROWING;
-};
+}
 
 //public function process is executed at the start of every timestep.
 //processes independend of other microtubules are placed here, processes dependend on other MTs are placed in the Cell
-bool Microtubule::process(){
+void Microtubule::process(){
     min_length_t_step = length;
     t_event = 0;
+    event = false;
     if (state == GROWING) {
         length += V_GROW * T_STEP;
 
@@ -40,7 +47,7 @@ bool Microtubule::process(){
             //length -= instant * V_GROW + (T_STEP - instant) * V_SHRINK;
             state = SHRINKING;
             //min_length_t_step = std::min(min_length_t_step, length);
-            return true;
+            event = true;
         }
     } else if(state == SHRINKING) {
         length -= V_SHRINK * T_STEP;
@@ -49,7 +56,7 @@ bool Microtubule::process(){
             //length += t_event * V_SHRINK + (T_STEP - t_event) * V_GROW;
             //min_length_t_step = length- (T_STEP - t_event) * V_GROW;
             state = GROWING;
-            return true;
+            event =  true;
         }else {
             min_length_t_step = length;
         }
@@ -58,10 +65,10 @@ bool Microtubule::process(){
 //        length -= dasl::mt_rng() * V_SHRINK * T_STEP;
 //        min_length_t_step = length;
             state = SHRINKING;
-            return true;
+            event = true;
         }
     }
-    return false;
+
 
 
 }
@@ -110,4 +117,11 @@ bool Microtubule::get_side(){
     return side;
 }
 
+bool Microtubule::get_event(){
+    return event;
+}
+
+void Microtubule::set_event(bool e) {
+    event = e;
+}
 

@@ -22,7 +22,7 @@
 #define P_RIGHT 0.5
 
 //daniel:
-#define BINDING_PER_LENGTH_PER_TIME 0.00000020 //per seconds per um
+#define BINDING_PER_LENGTH_PER_TIME 0.00000014 //per seconds per um
 
 
 const double P_CATASTROPHE = R_CATASTROPHE*T_STEP;

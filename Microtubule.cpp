@@ -3,10 +3,11 @@
 //
 
 #include "Microtubule.h"
-#include "RNG.h"
+
 
 //constructor used by Cell.h to create an empty MiTus array.
 Microtubule::Microtubule(){
+    n_guests = 0;
     length = dasl::mt_rng() * V_GROW;
     side = RIGHT;
     state = GROWING;
@@ -14,20 +15,15 @@ Microtubule::Microtubule(){
 
 //constructor used at initiation of Cell, side is randomly decided by cell.
 Microtubule::Microtubule(bool r){
+    n_guests = 0;
     length = dasl::mt_rng() * V_GROW;
     side = r;
     state = GROWING;
 }
 
-//constructor used during simulation to reset microtubule if length < 0.
-// Could be replaced by a reset function if deemed better in the future.
-//Microtubule::Microtubule(double l, bool r){
-//    length = l;
-//    side = r;
-//    state = GROWING;
-//};
 
 void Microtubule::reset(double l, bool r){
+    n_guests = 0;
     length = l;
     side = r;
     state = GROWING;
@@ -40,7 +36,11 @@ void Microtubule::process(){
     t_event = 0;
     event = false;
     if (state == GROWING) {
-        length += V_GROW * T_STEP;
+        if(n_guests > 0){
+            length += V_GROW * T_STEP * 0.1;
+        }else {
+            length += V_GROW * T_STEP;
+        }
 
         if(dasl::mt_rng() < P_CATASTROPHE){
             //double instant = dasl::mt_rng() * T_STEP;
@@ -64,6 +64,7 @@ void Microtubule::process(){
         if(dasl::mt_rng() < P_UNBIND){
 //        length -= dasl::mt_rng() * V_SHRINK * T_STEP;
 //        min_length_t_step = length;
+            host->delete_guest();
             state = SHRINKING;
             event = true;
         }
@@ -79,10 +80,12 @@ void Microtubule::bind_to_at(Microtubule* host_mt, double pos){
         host = host_mt;
         bind_pos = pos;
         length -= dasl::mt_rng() * V_GROW;
+        host->add_guest();
 }
 
 void Microtubule::check_host_length(){
     if(host->get_min_length_t_step() < bind_pos){
+        host->delete_guest();
         state = SHRINKING;
 //        if(host->get_state() == GROWING){
 //            length -= bind_pos - (host->get_min_length_t_step() - (T_STEP-host->get_t_event()) * V_SHRINK); //What the length would have been without rescue
@@ -123,5 +126,13 @@ bool Microtubule::get_event(){
 
 void Microtubule::set_event(bool e) {
     event = e;
+}
+
+void Microtubule::add_guest(){
+    n_guests += 1;
+}
+
+void Microtubule::delete_guest(){
+    n_guests -= 1;
 }
 

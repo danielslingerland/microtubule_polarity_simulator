@@ -3,7 +3,7 @@
 //
 
 #include "Cell.h"
-#include "RNG.h"
+
 
 Cell::Cell(){
     for(int n = 0; n < N_MICROTUBULES; n++){

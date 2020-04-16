@@ -5,9 +5,11 @@
 #ifndef MICROTUBULE_POLARITY_SIMULATOR_MICROTUBULE_H
 #define MICROTUBULE_POLARITY_SIMULATOR_MICROTUBULE_H
 #include "Parameters.h"
+#include "RNG.h"
 class Microtubule{
 
 private:
+    int n_guests;
     double length;
     double min_length_t_step;
     double t_event;
@@ -24,7 +26,6 @@ public:
 
     Microtubule();
     Microtubule(bool r);
-    Microtubule(double l,bool r);
     void reset(double l,bool r);
     void process();
     void bind_to_at(Microtubule* host_mt, double pos);
@@ -36,6 +37,8 @@ public:
     bool get_event();
     void set_event(bool e);
     void check_host_length();
+    void add_guest();
+    void delete_guest();
 
 };
 

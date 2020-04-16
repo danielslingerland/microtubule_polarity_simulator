@@ -40,9 +40,13 @@ def create_hist_fit(data, m_null, title):
 
 def create_hist(data, title):
     # the histogram of the data
-    plt.hist(data, 50, density=True, facecolor='g', alpha=0.75, label="Simulation")
+    bins = []
+    for bin in range(101):
+        bins.append(bin/100)
+    plt.hist(data, bins, density=True, facecolor='g', alpha=0.75, label="Simulation")
     plt.xlabel('polarity')
     plt.ylabel('number of microtubules')
+    plt.xlim(0, 1)
     plt.title(title)
     plt.grid()
     plt.show()
@@ -64,7 +68,8 @@ def create_overview():
         create_hist(d, "test")
 
 
-create_overview()
+#create_overview()
+create_hist(read_data("MT_polarity_larger2.txt"), "nicer")
 
 # testdata = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 140, 250, 300, 1, 2, 3, 4, 12, 4, 34, 23, 43]
 # m_test_null = m0(0.08, 0.16, 50, True)*len(testdata)

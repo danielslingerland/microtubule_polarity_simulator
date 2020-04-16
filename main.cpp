@@ -12,12 +12,12 @@
 int main() {
 
 
-    FileWriter polarity = FileWriter("MT_polarity");
+    FileWriter polarity = FileWriter("MT_polarity_larger");
     polarity.writeParameters();
 //    FileWriter state = FileWriter("MT_state2");
 //    state.writeParameters();
 
-    int t_max = 100000;
+    int t_max = 10000000;
 //    double lengths_per_timestep[N_MICROTUBULES];
 //    int states_per_timestep[N_MICROTUBULES];
     Cell cell1 = Cell();

@@ -23,7 +23,7 @@
 
 
 //daniel:
-#define BINDING_PER_LENGTH_PER_TIME 0.00000005 //per seconds per um
+#define BINDING_PER_LENGTH_PER_TIME 0.00000000 //per seconds per um
 #define HOST_PENALTY_FACTOR 1
 
 

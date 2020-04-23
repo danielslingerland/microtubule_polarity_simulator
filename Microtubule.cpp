@@ -8,7 +8,7 @@
 //constructor used by Cell.h to create an empty MiTus array.
 Microtubule::Microtubule(){
     n_guests = 0;
-    length = dasl::mt_rng() * V_GROW;
+    length = dasl::mt_rng() * V_GROW * T_STEP;
     side = RIGHT;
     state = GROWING;
 }
@@ -16,7 +16,7 @@ Microtubule::Microtubule(){
 //constructor used at initiation of Cell, side is randomly decided by cell.
 Microtubule::Microtubule(bool r){
     n_guests = 0;
-    length = dasl::mt_rng() * V_GROW;
+    length = dasl::mt_rng() * V_GROW * T_STEP;
     side = r;
     state = GROWING;
 }
@@ -79,7 +79,7 @@ void Microtubule::bind_to_at(Microtubule* host_mt, double pos){
         state = BOUND;
         host = host_mt;
         bind_pos = pos;
-        length -= dasl::mt_rng() * V_GROW;
+        length -= dasl::mt_rng() * V_GROW*T_STEP;
         host->add_guest();
 }
 

@@ -3,7 +3,7 @@ import numpy as np
 
 
 def read_data(filename):
-    f = open("DATA/" + filename, "r")
+    f = open("DATA_AMOLF/" + filename, "r")
     reading_data = False
     data = []
     i = 0
@@ -13,6 +13,7 @@ def read_data(filename):
         if reading_data:
             data.append(float(line))
         else:
+            print(line)
             if line == "DATA":
                 print("start reading data " + filename)
                 reading_data = True
@@ -69,7 +70,7 @@ def create_overview():
 
 
 #create_overview()
-create_hist(read_data("MT_polarity_larger2.txt"), "nicer")
+create_hist(read_data("MT_polarity_larger.txt"), "amofl")
 
 # testdata = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 140, 250, 300, 1, 2, 3, 4, 12, 4, 34, 23, 43]
 # m_test_null = m0(0.08, 0.16, 50, True)*len(testdata)

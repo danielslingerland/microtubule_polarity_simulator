@@ -1,18 +1,29 @@
 #include <iostream>
-#include <random>
-#include "Microtubule.h"
-#include "RNG.h"
+
 #include "Cell.h"
 #include "FileWriter.h"
-#include<string>
 
-#include <fstream>
+#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+#define PBWIDTH 60
+
+void printProgress (double progress)
+{
+    int barWidth = 70;
+    std::cout << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) std::cout << "=";
+        else if (i == pos) std::cout << ">";
+        else std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << " %\r";
+    std::cout.flush();
+}
 
 
 int main() {
 
-
-    FileWriter polarity = FileWriter("MT_polarity_larger");
+    FileWriter polarity = FileWriter("MT_polarity");
     polarity.writeParameters();
 //    FileWriter state = FileWriter("MT_state2");
 //    state.writeParameters();
@@ -24,7 +35,7 @@ int main() {
     for (int i = 0; i < t_max; i++) {
         cell1.run_timestep();
         if (i % 10000 == 0) {
-            std::cout << (double) i / (double) t_max << "   " << cell1.get_polarity() << "\n";
+            printProgress( (double) i / (double) t_max );
         }
         if (i > 50000) {
             polarity.writeDouble(cell1.get_polarity());

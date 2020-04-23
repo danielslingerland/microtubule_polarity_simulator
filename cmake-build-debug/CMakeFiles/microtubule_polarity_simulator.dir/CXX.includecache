@@ -6,9 +6,19 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.cpp
+Cell.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
+
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Cell.h
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
+
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.cpp
+FileWriter.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
+ctime
+-
 
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/FileWriter.h
 string
@@ -19,6 +29,10 @@ fstream
 -
 ctime
 -
+Microtubule.h
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
+
+C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.cpp
 Microtubule.h
 C:/Users/danie/CLionProjects/microtubule_polarity_simulator/Microtubule.h
 

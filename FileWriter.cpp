@@ -37,6 +37,7 @@ void FileWriter::writeParameters(){
     myfile << "V_SHRINK: " << V_SHRINK << "\n";
     myfile << "BINDING_PER_LENGTH_PER_TIME: " << BINDING_PER_LENGTH_PER_TIME << "\n";
     myfile << "P_RIGHT: " << P_RIGHT << "\n";
+    myfile << "HOST_PENALTY_FACTOR: " << HOST_PENALTY_FACTOR << "\n";
     myfile << "DATA\n";
     myfile.close();
 }

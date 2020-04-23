@@ -21,8 +21,10 @@
 //P: probability
 #define P_RIGHT 0.5
 
+
 //daniel:
 #define BINDING_PER_LENGTH_PER_TIME 0.00000005 //per seconds per um
+#define HOST_PENALTY_FACTOR 1
 
 
 const double P_CATASTROPHE = R_CATASTROPHE*T_STEP;

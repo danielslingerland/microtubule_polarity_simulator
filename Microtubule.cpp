@@ -37,7 +37,7 @@ void Microtubule::process(){
     event = false;
     if (state == GROWING) {
         if(n_guests > 0){
-            length += V_GROW * T_STEP * 0.1;
+            length += V_GROW * T_STEP * HOST_PENALTY_FACTOR;
         }else {
             length += V_GROW * T_STEP;
         }

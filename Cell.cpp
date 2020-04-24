@@ -5,7 +5,8 @@
 #include "Cell.h"
 
 
-Cell::Cell(){
+Cell::Cell(double bplpt){
+    BINDING_PER_LENGTH_PER_TIME = bplpt
     for(int n = 0; n < N_MICROTUBULES; n++){
         MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
 

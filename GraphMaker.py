@@ -3,7 +3,7 @@ import numpy as np
 
 
 def read_data(filename):
-    f = open("DATA_AMOLF/" + filename, "r")
+    f = open("DATA_AMOLF/DATA/" + filename, "r")
     reading_data = False
     data = []
     i = 0
@@ -44,9 +44,9 @@ def create_hist(data, title):
     bins = []
     for bin in range(101):
         bins.append(bin/100)
-    plt.hist(data, bins, density=True, facecolor='g', alpha=0.75, label="Simulation")
-    plt.xlabel('polarity')
-    plt.ylabel('number of microtubules')
+    plt.hist(data, bins, density=False, facecolor='g', alpha=0.75, label="Simulation")
+    plt.xlabel('length L / length total')
+    plt.ylabel('number of systems')
     plt.xlim(0, 1)
     plt.title(title)
     plt.grid()
@@ -70,8 +70,20 @@ def create_overview():
 
 
 #create_overview()
-create_hist(read_data("MT_polarity_larger.txt"), "amofl")
+#create_hist(read_data("MT_polarity10.txt"), "2.0e-7 per s per um ")
 
+bindings = [0, 0.5, 1, 1.2, 1.4, 1.5, 1.6, 1.7, 1.8, 2.0]
+polarities = []
+for i in range(1,11):
+    data = read_data("MT_polarity"+str(i)+".txt")
+    data_man = [abs(j -0.5) for j in data]
+    polarities.append(sum(data_man)/len(data_man))
+
+plt.plot(bindings, polarities)
+plt.xlabel("bindings per second per micrometer (*10^-7)")
+plt.ylabel("average distance from 0.5")
+plt.show()
+#0.5e-7
 # testdata = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 140, 250, 300, 1, 2, 3, 4, 12, 4, 34, 23, 43]
 # m_test_null = m0(0.08, 0.16, 50, True)*len(testdata)
 # create_hist_fit(testdata, m_test_null, "test")

@@ -3,7 +3,7 @@ import numpy as np
 
 
 def read_data(filename):
-    f = open("DATA_AMOLF/DATA/" + filename, "r")
+    f = open("../DATA/" + filename, "r")
     reading_data = False
     data = []
     i = 0
@@ -50,7 +50,7 @@ def create_hist(data, title):
     plt.xlim(0, 1)
     plt.title(title)
     plt.grid()
-    plt.show()
+    plt.savefig("../DATA/MT_polarity" +str(i)+ ".png", bbox_inches='tight')
 
 
 def m0(v_grow, v_shrink, l_bar, growing):
@@ -81,10 +81,11 @@ for i in range(1,21):
     polarities.append(sum(data_man)/len(data_man))
 
 
+
 plt.plot(bindings, polarities)
 plt.xlabel("bindings per second per micrometer (*10^-7)")
 plt.ylabel("average distance from 0.5")
-plt.show()
+plt.savefig('../DATA/polarity_binding.png', bbox_inches='tight')
 #0.5e-7
 # testdata = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 140, 250, 300, 1, 2, 3, 4, 12, 4, 34, 23, 43]
 # m_test_null = m0(0.08, 0.16, 50, True)*len(testdata)

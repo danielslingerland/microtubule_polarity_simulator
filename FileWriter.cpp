@@ -8,13 +8,13 @@ using namespace std;
 
 FileWriter::FileWriter(string fname) {
     string final_name = fname+".txt";
-    ifstream infile("../DATA1/"+final_name);
+    ifstream infile("../DATA/"+final_name);
     bool exists = infile.good();
     int count = 1;
     while(exists){
         count += 1;
         final_name = fname + to_string(count)+".txt";
-        ifstream infile2("../DATA1/"+final_name);
+        ifstream infile2("../DATA/"+final_name);
         exists = infile2.good();
 
     }
@@ -38,7 +38,7 @@ void FileWriter::writeParameters(double BINDING_PER_LENGTH_PER_TIME){
     myfile << "BINDING_PER_LENGTH_PER_TIME: " << BINDING_PER_LENGTH_PER_TIME << "\n";
     myfile << "P_RIGHT: " << P_RIGHT << "\n";
     myfile << "HOST_PENALTY_FACTOR: " << HOST_PENALTY_FACTOR << "\n";
-    myfile << "DATA1\n";
+    myfile << "DATA\n";
     myfile.close();
 }
 

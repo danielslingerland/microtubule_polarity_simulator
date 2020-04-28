@@ -19,7 +19,7 @@ FileWriter::FileWriter(string fname) {
 
     }
 
-    filename = "../DATA1/"+final_name;
+    filename = "../DATA/"+final_name;
 }
 
 void FileWriter::writeParameters(double BINDING_PER_LENGTH_PER_TIME){

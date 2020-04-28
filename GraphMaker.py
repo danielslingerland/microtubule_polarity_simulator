@@ -72,12 +72,14 @@ def create_overview():
 #create_overview()
 #create_hist(read_data("MT_polarity10.txt"), "2.0e-7 per s per um ")
 
-bindings = [0, 0.5, 1, 1.2, 1.4, 1.5, 1.6, 1.7, 1.8, 2.0]
+bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
 polarities = []
-for i in range(1,11):
+for i in range(1,21):
     data = read_data("MT_polarity"+str(i)+".txt")
+    create_hist(data, str(bindings[i-1])+" s-1 um-1")
     data_man = [abs(j -0.5) for j in data]
     polarities.append(sum(data_man)/len(data_man))
+
 
 plt.plot(bindings, polarities)
 plt.xlabel("bindings per second per micrometer (*10^-7)")

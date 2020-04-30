@@ -25,7 +25,7 @@ int main() {
         int n_bins = 101;
         int bins[n_bins];
         for(int b = 0; b < n_bins; b++){
-            bins[b] = 0
+            bins[b] = 0;
         }
 
 //    FileWriter state = FileWriter("MT_state2");

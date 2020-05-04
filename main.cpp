@@ -31,10 +31,10 @@ int main() {
 //    FileWriter state = FileWriter("MT_state2");
 //    state.writeParameters();
 
-        int t_max = 1000000;
+        int t_max = 100000;
 //    double lengths_per_timestep[N_MICROTUBULES];
 //    int states_per_timestep[N_MICROTUBULES];
-        for(int cell_run = 0; cell_run < 100; cell_run++) {
+        for(int cell_run = 0; cell_run < 10; cell_run++) {
             Cell cell1 = Cell(bplpt[r]);
 
             for (int i = 0; i < t_max; i++) {

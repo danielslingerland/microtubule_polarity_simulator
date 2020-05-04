@@ -12,7 +12,7 @@
 #define T_STEP 1
 #define N_MICROTUBULES 1000
 //R : per second (s^-1)
-#define R_CATASTROPHE 0.005
+#define R_CATASTROPHE 0.0016//0.005
 #define R_RESCUE 0.0//0.0068
 #define R_UNBIND 0.1
 //V : micrometer per second (um/s)

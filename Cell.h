@@ -21,6 +21,7 @@ private:
 public:
 
     Cell(double bplpt);
+    void
     void run_timestep();
     double get_polarity();
     double get_average_lenth();

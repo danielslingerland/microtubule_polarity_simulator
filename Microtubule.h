@@ -6,10 +6,12 @@
 #define MICROTUBULE_POLARITY_SIMULATOR_MICROTUBULE_H
 #include "Parameters.h"
 #include "RNG.h"
+#include <math.h>
 class Microtubule{
 
 private:
     int n_guests;
+
     double length;
     double min_length_t_step;
     double t_event;
@@ -18,6 +20,9 @@ private:
     int state;
     Microtubule* host;
     double bind_pos;
+
+    int event_planned;
+    double time_to_event;
 
 
 
@@ -40,6 +45,10 @@ public:
     void add_guest();
     void delete_guest();
 
+    double calculated_time_to_event(double b, double c_one);
+    void execute_event(double rbLt);
+    void bind_to_at_event(Microtubule* host_mt, double pos);
+    void run_time(double delta);
 };
 
 

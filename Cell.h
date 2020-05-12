@@ -17,16 +17,17 @@ private:
 
     bool check_binding(int n);
     Microtubule MiTus[N_MICROTUBULES];
-
+    void update_total_lengths();
 public:
 
     Cell(double bplpt);
-    void
     void run_timestep();
     double get_polarity();
     double get_average_lenth();
     double polarity_numbers();
     double halftime(double length);
+    void run_event();
+
 
 
 };

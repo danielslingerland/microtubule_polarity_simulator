@@ -98,7 +98,64 @@ void Microtubule::check_host_length(){
 
 }
 
+//<----- Event driven approach ------>
+double Microtubule::calculated_time_to_event(double b, double c_one){
+    if(state == GROWING){
+        double c = log(dasl::mt_rng())*c_one;
+        return -b+sqrt(pow(b, 2)+4*c);
+    }else if(state == SHRINKING){
+        double t_death = length/V_SHRINK;
+        double t_rescue = log(dasl::mt_rng())/-R_RESCUE;
+        if(t_death < t_rescue){
+            return t_death;
+        }else{
+            return t_rescue;
+        };
+    }else if(state == BOUND){
 
+        double t_unbind = log(dasl::mt_rng())/-R_UNBIND;
+        if(host->get_state() != SHRINKING){
+            return t_unbind;
+        }
+        double t_detach = (host->get_length()-bind_pos)/V_SHRINK;
+        if(t_detach < t_unbind){
+            return t_detach;
+        }else{
+            return t_unbind;
+        };
+    }
+
+}
+
+void Microtubule::execute_event(double rbLt){
+    if(state == GROWING){
+        if(dasl::mt_rng() < R_CATASTROPHE/(rbLt+R_CATASTROPHE)){
+            state = SHRINKING;
+        }else{
+            state = BOUND;
+        }
+    }else if(state == SHRINKING){
+        state = GROWING;
+    }else if(state == BOUND){
+        state = SHRINKING;
+        host->delete_guest();
+    }
+
+}
+
+void Microtubule::run_time(double delta){
+    if(state == GROWING){
+        length += V_GROW*delta;
+    }else if(state == SHRINKING){
+        length -= V_SHRINK*delta;
+    }
+}
+
+void Microtubule::bind_to_at_event(Microtubule* host_mt, double pos){
+    host = host_mt;
+    bind_pos = pos;
+    host->add_guest();
+}
 
 double Microtubule::get_length(){
         return length;

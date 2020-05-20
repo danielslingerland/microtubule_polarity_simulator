@@ -20,9 +20,8 @@ private:
     int state;
     Microtubule* host;
     double bind_pos;
+    bool death;
 
-    int event_planned;
-    double time_to_event;
 
 
 

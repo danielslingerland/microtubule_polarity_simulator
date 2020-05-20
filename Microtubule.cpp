@@ -2,6 +2,7 @@
 // Created by danie on 2-4-2020.
 //
 
+#include <iostream>
 #include "Microtubule.h"
 
 
@@ -99,19 +100,30 @@ void Microtubule::check_host_length(){
 }
 
 //<----- Event driven approach ------>
-double Microtubule::calculated_time_to_event(double b, double c_one){
+double Microtubule::calculated_time_to_event(double a, double b){
+
     if(state == GROWING){
-        double c = log(dasl::mt_rng())*c_one;
-        return -b+sqrt(pow(b, 2)+4*c);
+        double c = log(dasl::mt_rng());
+
+        if (a == 0){
+
+            return c/-b;
+        }else{
+            //std::cout << std::to_string(a) << "\n";
+            return (-b+sqrt(pow(b, 2)-4*c))/2;
+        }
     }else if(state == SHRINKING){
         double t_death = length/V_SHRINK;
         double t_rescue = log(dasl::mt_rng())/-R_RESCUE;
+
         if(t_death < t_rescue){
+            death = true;
             return t_death;
         }else{
+            death = false;
             return t_rescue;
         };
-    }else if(state == BOUND){
+    }else{
 
         double t_unbind = log(dasl::mt_rng())/-R_UNBIND;
         if(host->get_state() != SHRINKING){
@@ -136,6 +148,10 @@ void Microtubule::execute_event(double rbLt){
         }
     }else if(state == SHRINKING){
         state = GROWING;
+        if(death){
+            side = dasl::mt_rng() > P_RIGHT;
+            //std::cout << std::to_string(side) << "\n";
+        }
     }else if(state == BOUND){
         state = SHRINKING;
         host->delete_guest();
@@ -145,7 +161,9 @@ void Microtubule::execute_event(double rbLt){
 
 void Microtubule::run_time(double delta){
     if(state == GROWING){
+
         length += V_GROW*delta;
+        //std::cout << std::to_string(V_GROW) << " * "<< std::to_string(delta) <<"\n";
     }else if(state == SHRINKING){
         length -= V_SHRINK*delta;
     }

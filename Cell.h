@@ -14,19 +14,21 @@ private:
     double BINDING_PER_LENGTH_PER_TIME;
     double l_right;
     double l_left;
-
+    double run_time;
     bool check_binding(int n);
-    Microtubule MiTus[N_MICROTUBULES];
     void update_total_lengths();
+    Microtubule MiTus[N_MICROTUBULES];
 public:
-
     Cell(double bplpt);
+    Cell(double bplpt, double rt);
     void run_timestep();
     double get_polarity();
     double get_average_lenth();
     double polarity_numbers();
     double halftime(double length);
-    void run_event();
+    bool run_event();
+    double get_runtime();
+
 
 
 

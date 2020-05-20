@@ -14,6 +14,16 @@ Cell::Cell(double bplpt){
 
 }
 
+Cell::Cell(double bplpt, double rt){
+    run_time = rt;
+    BINDING_PER_LENGTH_PER_TIME = bplpt;
+    for(int n = 0; n < N_MICROTUBULES; n++){
+        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
+
+    }
+
+}
+
 void Cell::run_timestep(){
 
     //.............Calculating the total length of both sides......................
@@ -106,14 +116,14 @@ double Cell::polarity_numbers(){
 }
 
 double Cell::get_average_lenth(){
-    return (l_left+l_right)/1000;
+    return (l_left+l_right)/N_MICROTUBULES;
 }
 
-void Cell::run_event() {
+bool Cell::run_event() {
     l_left  = 0;
     l_right = 0;
-    int n_left[] = {0, 0, 0}; //GROWING, SHRINKING, BOUND
-    int n_right[]= {0, 0, 0}; //GROWING, SHRINKING, BOUND
+    int n_left[3] = {0, 0, 0}; //GROWING, SHRINKING, BOUND
+    int n_right[3]= {0, 0, 0}; //GROWING, SHRINKING, BOUND
     for(int n = 0; n < N_MICROTUBULES; n++){
         if(MiTus[n].get_side() == RIGHT){
             l_right += MiTus[n].get_length();
@@ -123,21 +133,24 @@ void Cell::run_event() {
             n_left[MiTus[n].get_state()]  += 1;
         }
     }
+    //std::cout << std::to_string(run_time)<<"   " <<std::to_string(l_left) <<"   " << std::to_string(l_right) <<"   " << std::to_string(n_right[GROWING])<<"   "  << std::to_string(n_right[SHRINKING])<<"   " << std::to_string(n_left[GROWING]) <<"   " << std::to_string(n_left[SHRINKING])<< "\n";
 
+    double a[2];
     double b[2];
-    double c_one[2];
-    c_one[LEFT] = 2/(V_GROW*n_right[GROWING]-V_SHRINK*n_right[SHRINKING]);
-    c_one[RIGHT]= 2/(V_GROW*n_left[GROWING] -V_SHRINK*n_left[SHRINKING] );
-    b[LEFT] =c_one[LEFT]*(BINDING_PER_LENGTH_PER_TIME*l_right+R_CATASTROPHE);
-    b[RIGHT]=c_one[RIGHT]*(BINDING_PER_LENGTH_PER_TIME*l_left+R_CATASTROPHE);
+
+    a[LEFT] = 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_right[GROWING]-V_SHRINK*n_right[SHRINKING]);
+    a[RIGHT]= 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_left[GROWING] -V_SHRINK*n_left[SHRINKING] );
+    b[LEFT] =BINDING_PER_LENGTH_PER_TIME*l_right+R_CATASTROPHE;
+    b[RIGHT]=BINDING_PER_LENGTH_PER_TIME*l_left +R_CATASTROPHE;
+
     double times[N_MICROTUBULES];
     for(int n = 0; n < N_MICROTUBULES; n++){
         int side = MiTus[n].get_side();
-        times[n] = MiTus[n].calculated_time_to_event(b[side], c_one[side]);
+        times[n] = MiTus[n].calculated_time_to_event(a[side], b[side]);
 
     }
-    double smallest_time = INFINITY;
-    int with_event = 0;
+    double smallest_time = run_time;
+    int with_event = N_MICROTUBULES;
     for(int n = 0; n < N_MICROTUBULES; n++){
         if(times[n] < smallest_time){
             smallest_time = times[n];
@@ -147,14 +160,17 @@ void Cell::run_event() {
     for(int n = 0; n < N_MICROTUBULES; n++){
         MiTus[n].run_time(smallest_time);
     }
-    double rbLt = 0;
+    run_time -= smallest_time;
+    if(with_event == N_MICROTUBULES){
+        return false;
+    }
+
+    double rbLt = 0.0;
     if(MiTus[with_event].get_state() == GROWING) {
         if (MiTus[with_event].get_side() == RIGHT) {
-            rbLt = BINDING_PER_LENGTH_PER_TIME *
-                   (l_left + (V_GROW * n_left[GROWING] - V_SHRINK * n_left[SHRINKING]) * smallest_time);
+            rbLt = BINDING_PER_LENGTH_PER_TIME * (l_left + (V_GROW * n_left[GROWING] - V_SHRINK * n_left[SHRINKING]) * smallest_time);
         } else {
-            rbLt = BINDING_PER_LENGTH_PER_TIME *
-                   (l_right + (V_GROW * n_right[GROWING] - V_SHRINK * n_right[SHRINKING]) * smallest_time);
+            rbLt = BINDING_PER_LENGTH_PER_TIME * (l_right + (V_GROW * n_right[GROWING] - V_SHRINK * n_right[SHRINKING]) * smallest_time);
         }
     }
     MiTus[with_event].execute_event(rbLt);
@@ -182,6 +198,7 @@ void Cell::run_event() {
         }
         MiTus[with_event].bind_to_at_event(&MiTus[s], global_pos);
     }
+    return true;
 }
 
 void Cell::update_total_lengths(){
@@ -196,4 +213,7 @@ void Cell::update_total_lengths(){
         }
     }
 
+}
+double Cell::get_runtime(){
+    return run_time;
 }

@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 
-import matplotlib
-matplotlib.use('Agg')
+# import matplotlib
+# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
 
 def read_data(filename, type_to):
     # f = open("../DATA/" + filename, "r")
-    f = open("../DATA/" + filename, "r")
+    f = open("DATA/" + filename, "r")
     reading_data = False
     data = []
     i = 0
     for line in f:
         line = line.replace("\n", "")
         i += 1
+        if i == 100000000:
+            break
         if reading_data:
             data.append(type_to(line))
         else:
@@ -94,7 +96,15 @@ def polarity_from_bins(data_bins):
         nominator += data_bins[d]*polarity
     return nominator/denominator
 
-
+lengths = read_data("MT_length_ed2.txt", float)
+states = read_data("MT_state_ed2.txt", int)
+lengths_gs = [[],[]]
+for i in range(len(lengths)):
+    lengths_gs[states[i]].append(lengths[i])
+m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
+create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
+create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
+create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
 # bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
 # polarities = []
 # for i in range(0, 20):
@@ -109,20 +119,20 @@ def polarity_from_bins(data_bins):
 # plt.ylabel("average distance from 0.5")
 # plt.savefig("../pictures/overview.png", bbox_inches='tight')
 
-T_STEP = 1
-N_MICROTUBULES = 1000
-R_CATASTROPHE = 0.0016
-R_RESCUE = 0.0068
-R_UNBIND = 0.1
-V_GROW = 0.08
-V_SHRINK = 0.16
-P_RIGHT = 0.5
-
-l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
-
-print(l_bar)
-R_CATASTROPHE = l_bar**-1*V_GROW
-print(R_CATASTROPHE)
-R_RESCUE = 0
-l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
-print(l_bar)
+# T_STEP = 1
+# N_MICROTUBULES = 1000
+# R_CATASTROPHE = 0.0016
+# R_RESCUE = 0.0068
+# R_UNBIND = 0.1
+# V_GROW = 0.08
+# V_SHRINK = 0.16
+# P_RIGHT = 0.5
+#
+# l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
+#
+# print(l_bar)
+# R_CATASTROPHE = l_bar**-1*V_GROW
+# print(R_CATASTROPHE)
+# R_RESCUE = 0
+# l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
+# print(l_bar)

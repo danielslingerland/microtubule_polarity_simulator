@@ -104,13 +104,11 @@ double Microtubule::calculated_time_to_event(double a, double b){
 
     if(state == GROWING){
         double c = log(dasl::mt_rng());
-
-        if (a == 0){
-
+        if (a == 0.0){
             return c/-b;
         }else{
             //std::cout << std::to_string(a) << "\n";
-            return (-b+sqrt(pow(b, 2)-4*c))/2;
+            return (-b+sqrt( pow(b, 2)-4*c*a))/(2*a);
         }
     }else if(state == SHRINKING){
         double t_death = length/V_SHRINK;

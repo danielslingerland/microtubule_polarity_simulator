@@ -76,7 +76,7 @@ int main() {
     std::cout << "start event driven \n";
     }
     if(eventdrive){
-        double total_time = 100000;
+        double total_time = 10000.0;
         for(int s = 0; s < 20; s++) {
             int n_bins = 301;
             int bins[n_bins];
@@ -84,14 +84,13 @@ int main() {
                 bins[b] = 0;
             }
             //std::cout << std::to_string(s)<<  "\n";
-            for (int cell_run = 0; cell_run < 100; cell_run++) {
+            for (int cell_run = 0; cell_run < 1; cell_run++) {
                 Cell cell2 = Cell(bplpt[s], total_time);
                 bool next = true;
                 while (next) {
                     count += 1;
                     next = cell2.run_event();
                     bins[(int) (cell2.get_polarity() * n_bins)]++;
-
                 }
             }
             if (write_eventdrive) {

@@ -18,7 +18,7 @@ Cell::Cell(double bplpt, double rt){
     run_time = rt;
     BINDING_PER_LENGTH_PER_TIME = bplpt;
     for(int n = 0; n < N_MICROTUBULES; n++){
-        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
+        MiTus[n] = Microtubule(true);
 
     }
 
@@ -120,6 +120,8 @@ double Cell::get_average_lenth(){
 }
 
 bool Cell::run_event() {
+
+    //-----------------------Calculating Total Lengths------------------------------
     l_left  = 0;
     l_right = 0;
     int n_left[3] = {0, 0, 0}; //GROWING, SHRINKING, BOUND
@@ -135,20 +137,22 @@ bool Cell::run_event() {
     }
     //std::cout << std::to_string(run_time)<<"   " <<std::to_string(l_left) <<"   " << std::to_string(l_right) <<"   " << std::to_string(n_right[GROWING])<<"   "  << std::to_string(n_right[SHRINKING])<<"   " << std::to_string(n_left[GROWING]) <<"   " << std::to_string(n_left[SHRINKING])<< "\n";
 
+    //-----------------------Calculating AB for ABC-formula------------------------------
     double a[2];
     double b[2];
-
     a[LEFT] = 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_right[GROWING]-V_SHRINK*n_right[SHRINKING]);
     a[RIGHT]= 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_left[GROWING] -V_SHRINK*n_left[SHRINKING] );
     b[LEFT] =BINDING_PER_LENGTH_PER_TIME*l_right+R_CATASTROPHE;
     b[RIGHT]=BINDING_PER_LENGTH_PER_TIME*l_left +R_CATASTROPHE;
 
+    //-----------------------Calculating times to event for every MT------------------------------
     double times[N_MICROTUBULES];
     for(int n = 0; n < N_MICROTUBULES; n++){
         int side = MiTus[n].get_side();
         times[n] = MiTus[n].calculated_time_to_event(a[side], b[side]);
 
     }
+    //-----------------------Selecting smallest time to event------------------------------
     double smallest_time = run_time;
     int with_event = N_MICROTUBULES;
     for(int n = 0; n < N_MICROTUBULES; n++){
@@ -157,14 +161,17 @@ bool Cell::run_event() {
             with_event = n;
         }
     }
+    //-----------------------Running time until smallest time-------------------------------
     for(int n = 0; n < N_MICROTUBULES; n++){
         MiTus[n].run_time(smallest_time);
     }
     run_time -= smallest_time;
+    //-----------------------Returning false when time has run out------------------------------
     if(with_event == N_MICROTUBULES){
         return false;
     }
 
+    //-----------------------Applying event to MT with smallest event time----------------------
     double rbLt = 0.0;
     if(MiTus[with_event].get_state() == GROWING) {
         if (MiTus[with_event].get_side() == RIGHT) {
@@ -174,6 +181,8 @@ bool Cell::run_event() {
         }
     }
     MiTus[with_event].execute_event(rbLt);
+
+    //---------------If event is binding, the MT is given a host and binding position--------------
     if(MiTus[with_event].get_state() == BOUND) {
         double l_opposite = 0;
         for(int n = 0; n < N_MICROTUBULES; n++) {
@@ -196,8 +205,10 @@ bool Cell::run_event() {
                 s += 1;
             }
         }
-        MiTus[with_event].bind_to_at_event(&MiTus[s], global_pos);
+        MiTus[with_event].bind_to_at_event(&MiTus[s] , global_pos);
     }
+
+    //---------------Returning true to signal that we have not reached the end of time--------------
     return true;
 }
 

@@ -21,8 +21,8 @@ r_c = 0.005
 rng = 0.5
 ld_L = 0.01
 
-x_limit = 2.0e7
-y_limit = 0.2e6
+x_limit = 2.0e3#2.0e7
+y_limit = 0.2e2#0.2e6
 x = np.linspace(-x_limit, x_limit, 100)
 y1 = 0.5*r_binding*-ld_L*x**2 + (r_binding*l_L+r_c)*x+np.log(rng)
 y2 = 0.5*r_binding*ld_L*x**2 + (r_binding*l_L+r_c)*x+np.log(rng)

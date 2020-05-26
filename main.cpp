@@ -76,7 +76,7 @@ int main() {
     std::cout << "start event driven \n";
     }
     if(eventdrive){
-        double total_time = 10000.0;
+        double total_time = 1000000.0;
         for(int s = 0; s < 20; s++) {
             int n_bins = 301;
             int bins[n_bins];

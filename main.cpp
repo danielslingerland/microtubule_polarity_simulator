@@ -3,6 +3,7 @@
 #include "Cell.h"
 #include "FileWriter.h"
 #include <ctime>
+#include <math.h>
 
 void printProgress (double progress)
 {
@@ -30,6 +31,11 @@ int main() {
     bool write_timestep = false;
     bool write_eventdrive = true;
     double bplpt[] = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
+    double bpnpt[20];
+
+    for(int b = 0; b < 20; b++) {
+        bpnpt[b] = 0.0000000000000001*pow(10, b*1.0);
+    }
 
     //std::cout << std::to_string(1.0/.00) <<"\n";
     print_timestamp();
@@ -76,7 +82,7 @@ int main() {
     std::cout << "start event driven \n";
     }
     if(eventdrive){
-        double total_time = 1000000.0;
+        double total_time = 1000.0;
         for(int s = 0; s < 20; s++) {
             int n_bins = 301;
             int bins[n_bins];
@@ -84,8 +90,9 @@ int main() {
                 bins[b] = 0;
             }
             //std::cout << std::to_string(s)<<  "\n";
+            Cell cell2;
             for (int cell_run = 0; cell_run < 1; cell_run++) {
-                Cell cell2 = Cell(bplpt[s], total_time);
+                cell2 = Cell(bpnpt[s], total_time, NUMBER);
                 bool next = true;
                 while (next) {
                     count += 1;
@@ -95,7 +102,7 @@ int main() {
             }
             if (write_eventdrive) {
                 FileWriter polarity = FileWriter("MT_polarity");
-                polarity.writeParameters(bplpt[s]);
+                polarity.writeParameters(bpnpt[s]);
                 polarity.writeIntArray(bins, n_bins);
             }
 

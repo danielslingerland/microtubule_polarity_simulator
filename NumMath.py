@@ -45,6 +45,24 @@ solve_ab(r_c, np.log(rng))
 solve_abc(0.5*r_binding*ld_L, (r_binding*l_L+r_c), np.log(rng))
 
 
+T_STEP = 1
+N_MICROTUBULES = 1000
+R_CATASTROPHE = 0.005
+R_RESCUE = 0.0068
+R_UNBIND = 0.1
+V_GROW = 0.08
+V_SHRINK = 0.16
+P_RIGHT = 0.5
+
+l_bar = 1/((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))
+#
+print(l_bar)
+# R_CATASTROPHE = l_bar**-1*V_GROW
+# print(R_CATASTROPHE)
+# R_RESCUE = 0
+# l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
+# print(l_bar)
+
 
 
 

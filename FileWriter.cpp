@@ -35,7 +35,7 @@ void FileWriter::writeParameters(double BINDING_PER_LENGTH_PER_TIME){
     myfile << "R_UNBIND: " << R_UNBIND << "\n";
     myfile << "V_GROW: " << V_GROW << "\n";
     myfile << "V_SHRINK: " << V_SHRINK << "\n";
-    myfile << "BINDING_PER_LENGTH_PER_TIME: " << BINDING_PER_LENGTH_PER_TIME << "\n";
+    myfile << "r_binding: " << BINDING_PER_LENGTH_PER_TIME << "\n";
     myfile << "P_RIGHT: " << P_RIGHT << "\n";
     myfile << "HOST_PENALTY_FACTOR: " << HOST_PENALTY_FACTOR << "\n";
     myfile << "DATA\n";

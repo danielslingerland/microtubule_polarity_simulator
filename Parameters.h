@@ -23,8 +23,8 @@
 
 
 //daniel:
-//#define BINDING_PER_LENGTH_PER_TIME 0.00000000 //per seconds per um
-#define HOST_PENALTY_FACTOR 0.5
+#define HOST_PENALTY_FACTOR 1
+
 
 
 const double P_CATASTROPHE = R_CATASTROPHE*T_STEP;
@@ -32,5 +32,6 @@ const double P_RESCUE = R_RESCUE*T_STEP;
 const double P_UNBIND = R_UNBIND*T_STEP;
 enum{GROWING, SHRINKING, BOUND};
 enum{RIGHT, LEFT};
+enum{LENGTH, NUMBER};
 
 

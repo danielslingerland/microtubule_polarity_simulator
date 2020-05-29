@@ -11,16 +11,18 @@
 
 class Cell {
 private:
-    double BINDING_PER_LENGTH_PER_TIME;
+    double r_binding;
     double l_right;
     double l_left;
     double run_time;
+    int type;
     bool check_binding(int n);
     void update_total_lengths();
     Microtubule MiTus[N_MICROTUBULES];
 public:
+    Cell();
     Cell(double bplpt);
-    Cell(double bplpt, double rt);
+    Cell(double bplpt, double rt, int type = LENGTH);
     void run_timestep();
     double get_polarity();
     double get_average_lenth();

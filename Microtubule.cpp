@@ -159,8 +159,12 @@ void Microtubule::execute_event(double rbLt){
 
 void Microtubule::run_time(double delta){
     if(state == GROWING){
+        if(n_guests > 0){
+            length += V_GROW * delta * HOST_PENALTY_FACTOR;
+        }else {
+            length += V_GROW * delta;
+        }
 
-        length += V_GROW*delta;
         //std::cout << std::to_string(V_GROW) << " * "<< std::to_string(delta) <<"\n";
     }else if(state == SHRINKING){
         length -= V_SHRINK*delta;

@@ -68,7 +68,8 @@ def create_bar(data, title, i):
     plt.title(title)
     plt.xlabel("L/(L+R)")
     plt.ylabel("counts")
-    plt.savefig("../pictures/MT_polarity" +str(i)+ ".png", bbox_inches='tight')
+    plt.show()
+    #plt.savefig("../pictures/MT_polarity" +str(i)+ ".png", bbox_inches='tight')
 
 
 def m0(v_grow, v_shrink, l_bar, growing):
@@ -96,28 +97,29 @@ def polarity_from_bins(data_bins):
         nominator += data_bins[d]*polarity
     return nominator/denominator
 
-lengths = read_data("MT_length_ed2.txt", float)
-states = read_data("MT_state_ed2.txt", int)
-lengths_gs = [[],[]]
-for i in range(len(lengths)):
-    lengths_gs[states[i]].append(lengths[i])
-m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
-create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
-create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
-create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
-# bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
-# polarities = []
-# for i in range(0, 20):
-#     data = read_data("MT_polarity"+str(i)+".txt", int)
-#     create_bar(data, str(bindings[i-1])+" s-1 um-1")
-#     #data_man = [abs(j -0.5) for j in data]
-#     polarities.append(polarity_from_bins(data))
-#     plt.figure(i+2)
-#
-# plt.plot(bindings, polarities)
-# plt.xlabel("binding rate (s^{-1} um^{-1})")
-# plt.ylabel("average distance from 0.5")
-# plt.savefig("../pictures/overview.png", bbox_inches='tight')
+# lengths = read_data("MT_length_ed2.txt", float)
+# states = read_data("MT_state_ed2.txt", int)
+# lengths_gs = [[],[]]
+# for i in range(len(lengths)):
+#     lengths_gs[states[i]].append(lengths[i])
+# m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
+# create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
+# create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
+# create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
+bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
+polarities = []
+for i in range(1, 21):
+    data = read_data("MT_polarity"+str(i)+".txt", int)
+    #data_man = [abs(j -0.5) for j in data]
+    polarities.append(polarity_from_bins(data))
+    plt.plot(data)
+    plt.show()
+
+plt.plot(bindings, polarities)
+plt.xlabel("binding rate (s^{-1} um^{-1})")
+plt.ylabel("average distance from 0.5")
+plt.show()
+#plt.savefig("../pictures/overview.png", bbox_inches='tight')
 
 # T_STEP = 1
 # N_MICROTUBULES = 1000

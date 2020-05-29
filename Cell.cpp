@@ -2,26 +2,36 @@
 // Created by danie on 3-4-2020.
 //
 
+#include <iostream>
 #include "Cell.h"
-
-
-Cell::Cell(double bplpt){
-    BINDING_PER_LENGTH_PER_TIME = bplpt;
-    for(int n = 0; n < N_MICROTUBULES; n++){
-        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
-
-    }
+Cell::Cell(){
 
 }
 
-Cell::Cell(double bplpt, double rt){
-    run_time = rt;
-    BINDING_PER_LENGTH_PER_TIME = bplpt;
+
+Cell::Cell(double bplpt){
+    r_binding = bplpt;
     for(int n = 0; n < N_MICROTUBULES; n++){
         MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
 
     }
 
+
+}
+
+Cell::Cell(double bplpt, double rt, int t){
+    run_time = rt;
+
+    for(int n = 0; n < N_MICROTUBULES; n++){
+        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
+
+    }
+    type = t;
+    if(type == LENGTH) {
+        r_binding = bplpt;
+    }else if(type == NUMBER) {
+        r_binding = bplpt; //* (1 / ((R_CATASTROPHE / V_GROW) - (R_RESCUE / V_SHRINK)));
+    }
 }
 
 void Cell::run_timestep(){
@@ -95,7 +105,7 @@ bool Cell::check_binding(int n){
 }
 
 double Cell::halftime(double length){
-    return 1/(BINDING_PER_LENGTH_PER_TIME*length);
+    return 1/(r_binding * length);
 }
 
 
@@ -140,11 +150,21 @@ bool Cell::run_event() {
     //-----------------------Calculating AB for ABC-formula------------------------------
     double a[2];
     double b[2];
-    a[LEFT] = 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_right[GROWING]-V_SHRINK*n_right[SHRINKING]);
-    a[RIGHT]= 0.5*BINDING_PER_LENGTH_PER_TIME*(V_GROW*n_left[GROWING] -V_SHRINK*n_left[SHRINKING] );
-    b[LEFT] =BINDING_PER_LENGTH_PER_TIME*l_right+R_CATASTROPHE;
-    b[RIGHT]=BINDING_PER_LENGTH_PER_TIME*l_left +R_CATASTROPHE;
+    if(type == LENGTH) {
+        a[LEFT] = 0.5 * r_binding * (V_GROW * n_right[GROWING] - V_SHRINK * n_right[SHRINKING]);
+        a[RIGHT] = 0.5 * r_binding * (V_GROW * n_left[GROWING] - V_SHRINK * n_left[SHRINKING]);
+        b[LEFT] = r_binding * l_right + R_CATASTROPHE;
+        b[RIGHT] = r_binding * l_left + R_CATASTROPHE;
+    }else if (type == NUMBER){
+        a[LEFT] = 0.0;
+        a[RIGHT] =0.0;
+        b[LEFT] = r_binding * (n_right[GROWING]+n_right[SHRINKING]+n_right[BOUND]) + R_CATASTROPHE;
+        b[RIGHT] = r_binding * (n_left[GROWING]+n_left[SHRINKING]+n_left[BOUND]) + R_CATASTROPHE;
 
+    }else{
+        std::cout << "ERROR: no type recognized for Cell.type\n";
+        return false;
+    }
     //-----------------------Calculating times to event for every MT------------------------------
     double times[N_MICROTUBULES];
     for(int n = 0; n < N_MICROTUBULES; n++){
@@ -174,10 +194,22 @@ bool Cell::run_event() {
     //-----------------------Applying event to MT with smallest event time----------------------
     double rbLt = 0.0;
     if(MiTus[with_event].get_state() == GROWING) {
-        if (MiTus[with_event].get_side() == RIGHT) {
-            rbLt = BINDING_PER_LENGTH_PER_TIME * (l_left + (V_GROW * n_left[GROWING] - V_SHRINK * n_left[SHRINKING]) * smallest_time);
-        } else {
-            rbLt = BINDING_PER_LENGTH_PER_TIME * (l_right + (V_GROW * n_right[GROWING] - V_SHRINK * n_right[SHRINKING]) * smallest_time);
+        if(type == LENGTH) {
+            if (MiTus[with_event].get_side() == RIGHT) {
+                rbLt = r_binding * (l_left + (V_GROW * n_left[GROWING] - V_SHRINK * n_left[SHRINKING]) * smallest_time);
+            } else {
+                rbLt = r_binding *
+                       (l_right + (V_GROW * n_right[GROWING] - V_SHRINK * n_right[SHRINKING]) * smallest_time);
+            }
+        }else if(type == NUMBER){
+            if (MiTus[with_event].get_side() == RIGHT) {
+                rbLt = r_binding * (n_left[GROWING]+n_left[SHRINKING]+n_left[BOUND]);
+            } else {
+                rbLt = r_binding * (n_right[GROWING]+n_right[SHRINKING]+n_right[BOUND]);
+            }
+        }else{
+            std::cout << "ERROR: no type recognized for Cell.type\n";
+            return false;
         }
     }
     MiTus[with_event].execute_event(rbLt);

@@ -30,18 +30,21 @@ int main() {
     bool eventdrive = true;
     bool write_timestep = false;
     bool write_eventdrive = true;
-    double bplpt[] = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
+    double bplpt[20];// = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
     double bpnpt[20];
-
+    int count[20];
     for(int b = 0; b < 20; b++) {
+        count[0] = 0;
+        bplpt[b] = 0.000000015*b;
         bpnpt[b] = 0.0000000000000001*pow(10, b*1.0);
     }
+    FileWriter countwriter = FileWriter("speed_counts");
+    countwriter.writeParameters(bpnpt[0]);
 
     //std::cout << std::to_string(1.0/.00) <<"\n";
     print_timestamp();
     std::cout << "start timestep driven \n";
 
-    int count = 0;
     if(timestep) {
     for(int r = 0; r < 20; r++){
 //        int n_bins = 101;
@@ -59,7 +62,7 @@ int main() {
 
                 for (int i = 0; i < t_max; i++) {
                     cell1.run_timestep();
-                    count += 1;
+                    count[r] += 1;
 //                    if (i > 50000) {
 //                        bins[(int) (cell1.get_polarity() * n_bins)]++;
 //                    }
@@ -76,13 +79,12 @@ int main() {
             }
         //std::cout << std::to_string(bins[50]) <<"\n";
     }//end run
-    std::cout << "end timestep driven run "<< std::to_string(count) <<" steps \n";
+
     print_timestamp();
-    count = 0;
     std::cout << "start event driven \n";
     }
     if(eventdrive){
-        double total_time = 1000.0;
+        double total_time = 10000000.0;
         for(int s = 0; s < 20; s++) {
             int n_bins = 301;
             int bins[n_bins];
@@ -95,7 +97,7 @@ int main() {
                 cell2 = Cell(bpnpt[s], total_time, NUMBER);
                 bool next = true;
                 while (next) {
-                    count += 1;
+                    count[s] += 1;
                     next = cell2.run_event();
                     bins[(int) (cell2.get_polarity() * n_bins)]++;
                 }
@@ -108,8 +110,9 @@ int main() {
 
         }
     }
-    std::cout << "end event driven run "<< std::to_string(count) <<" events \n";
+
     print_timestamp();
+    countwriter.writeIntArray(count, 20);
     return 0;
 }
 

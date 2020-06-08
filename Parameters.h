@@ -9,7 +9,7 @@
 
 //Values from Xavi Fernandez-Luengo Flores MSc Thesis (Table 4.11)
 //T : seconds (s)
-#define T_STEP 0.1
+#define T_STEP 0.0
 #define N_MICROTUBULES 1000
 //R : per second (s^-1)
 #define R_CATASTROPHE 0.005

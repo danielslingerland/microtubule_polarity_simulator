@@ -99,7 +99,8 @@ int main() {
                 while (next) {
                     count[s] += 1;
                     next = cell2.run_event();
-                    bins[(int) (cell2.get_polarity() * n_bins)]++;
+                    bins[(int) ((cell2.get_polarity()+1)*0.5 * n_bins)]++;
+                    std::cout << std::to_string(cell2.get_polarity())<<  "\n";
                 }
             }
             if (write_eventdrive) {

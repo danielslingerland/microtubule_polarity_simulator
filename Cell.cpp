@@ -110,7 +110,7 @@ double Cell::halftime(double length){
 
 
 double Cell::get_polarity() {
-    return (l_right-l_right)/(l_left+l_right);
+    return (l_right-l_left)/(l_left+l_right);
 }
 
 double Cell::polarity_numbers(){

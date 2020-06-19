@@ -20,6 +20,17 @@ def read_time(filename, path):
         line = line.replace("  ", " ")
         return datetime.strptime(line, "%a %b %d %H:%M:%S %Y")
 
+def read_multiple_times(filename, path):
+    f = open(path + filename, "r")
+    times = []
+    for line in f:
+        if "simulation started writing at: " in line:
+            line = line.replace("\n", "")
+            line = line.replace("simulation started writing at: ", "")
+            line = line.replace("  ", " ")
+            times.append(datetime.strptime(line, "%a %b %d %H:%M:%S %Y"))
+    return times
+
 
 def read_data(filename, type_to, path):
     # f = open("../DATA/" + filename, "r")
@@ -125,10 +136,16 @@ def d_times_from_path(path):
         dtimes.append((times[j+1]-times[j]).total_seconds())
     return dtimes
 
+def d_times_from_times(times):
+    dtimes = []
+    for j in range(len(times)-1):
+        dtimes.append((times[j+1]-times[j]).total_seconds())
+    return dtimes
+
 
 def polarities_from_path(path):
     polarities = []
-    for i in range(1, 21):
+    for i in range(1, 41):
         data = read_data("MT_polarity"+str(i)+".txt", int, path)
         #data_man = [abs(j -0.5) for j in data]
         polarities.append(polarity_from_bins(data))
@@ -143,15 +160,75 @@ def get_step_time(time, steps):
     return step_times
 
 
-lengths = read_data("MT_length_ed2.txt", float, "DATA/verifing/length_ed/")
-states = read_data("MT_state_ed2.txt", int, "DATA/verifing/length_ed/")
-lengths_gs = [[],[]]
-for i in range(len(lengths)):
-    lengths_gs[states[i]].append(lengths[i])
-m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
-create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
-create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
-create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
+p = polarities_from_path("DATA/speed2/")
+
+
+
+x = []
+x2 = []
+ax = 0
+
+for i in range(20):
+    x2.append(ax)
+    for i in range(10):
+        x.append(ax)
+    ax += 1.5e-8
+
+
+plt.plot(p[0:20])
+plt.show()
+
+d = d_times_from_times(read_multiple_times("times.txt", "DATA/speed2/"))
+plt.plot(x, d[0:200], "x", label="timestep 0.1 s")
+plt.plot(x, d[200:400], "x", label="event driven")
+plt.legend(loc="best")
+plt.xlabel("binding rate (s^{-1} um^{-1})")
+plt.ylabel("simulation time (s)")
+plt.show()
+
+
+speed_counts = read_data("speed_counts.txt", int,  "DATA/speed2/")
+speed_counts_step = []
+for i in range(20):
+    speed_counts_step.append(100000000)
+    speed_counts[i] -= speed_counts_step[i]
+
+plt.plot(x2, speed_counts_step, label="timestep 0.1 s")
+plt.plot(x2, speed_counts, label="event driven")
+plt.legend(loc="best")
+plt.xlabel("binding rate (s^{-1} um^{-1})")
+plt.ylabel("steps")
+plt.show()
+
+fig, ax1 = plt.subplots()
+
+color = 'tab:red'
+ax1.set_xlabel('time (s)')
+ax1.set_ylabel('exp', color=color)
+ax1.plot(x, d[0:200], "x", label="timestep 0.1 s")
+ax1.plot(x, d[200:400], "x", label="event driven")
+ax1.tick_params(axis='y', labelcolor=color)
+
+ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+
+color = 'tab:blue'
+ax2.set_ylabel('sin', color=color)  # we already handled the x-label with ax1
+ax2.plot(x2, speed_counts_step)
+ax2.plot(x2, speed_counts)
+ax2.tick_params(axis='y', labelcolor=color)
+
+fig.tight_layout()  # otherwise the right y-label is slightly clipped
+plt.show()
+
+# lengths = read_data("MT_length_ed2.txt", float, "DATA/verifing/length_ed/")
+# states = read_data("MT_state_ed2.txt", int, "DATA/verifing/length_ed/")
+# lengths_gs = [[],[]]
+# for i in range(len(lengths)):
+#     lengths_gs[states[i]].append(lengths[i])
+# m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
+# create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
+# create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
+# create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
 # bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
 #
 # times_event = d_times_from_path("DATA/speed_event/")

@@ -1,6 +1,4 @@
-//
-// Created by danie on 2-4-2020.
-//
+
 
 #include <iostream>
 #include "Microtubule.h"

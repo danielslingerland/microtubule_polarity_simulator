@@ -16,10 +16,13 @@ private:
     double l_left;
     double run_time;
     int type;
+    double d_time;
     bool check_binding(int n);
     void update_total_lengths();
     Microtubule MiTus[N_MICROTUBULES];
+
 public:
+
     Cell();
     Cell(double bplpt);
     Cell(double bplpt, double rt, int type = LENGTH);
@@ -30,6 +33,7 @@ public:
     double halftime(double length);
     bool run_event();
     double get_runtime();
+    double get_d_time();
 
 
 

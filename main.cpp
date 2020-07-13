@@ -25,6 +25,15 @@ void print_timestamp(){
     std::cout << "timestamp at: " << dt << "\n";
 }
 
+double bin_edge(int n, int n_bins, int side){
+    if(side == RIGHT){
+        return ((((double) n + 1.0) / ((double) n_bins)))*2.0-1.0;
+    }else{
+        return (((double) n) / ((double) n_bins))*2.0-1.0;
+    }
+
+}
+
 int main() {
     bool timestep = false;
     bool eventdrive = true;
@@ -47,7 +56,7 @@ int main() {
 
     if(timestep) {
     for(int r = 0; r < 20; r++){
-//        int n_bins = 101;
+//        int n_bins = 301;
 //        int bins[n_bins];
 //        for(int b = 0; b < n_bins; b++){
 //            bins[b] = 0;
@@ -84,31 +93,75 @@ int main() {
     std::cout << "start event driven \n";
     }
     if(eventdrive){
-        double total_time = 10000000.0;
+        double total_time = 100000.0;
+        double previous_polarity = 0.0;
+        double this_polarity;
+        int n_bins = 301;
+        double bins[n_bins+1];
+
         for(int s = 0; s < 20; s++) {
-            int n_bins = 301;
-            int bins[n_bins];
             for(int b = 0; b < n_bins; b++){
                 bins[b] = 0;
             }
             //std::cout << std::to_string(s)<<  "\n";
-            Cell cell2;
             for (int cell_run = 0; cell_run < 1; cell_run++) {
-                cell2 = Cell(bpnpt[s], total_time, NUMBER);
+                Cell cell2 = Cell(bpnpt[s], total_time, NUMBER);
                 bool next = true;
                 while (next) {
+
                     count[s] += 1;
                     next = cell2.run_event();
-                    bins[(int) ((cell2.get_polarity()+1)*0.5 * n_bins)]++;
-                    std::cout << std::to_string(cell2.get_polarity())<<  "\n";
+                    //temp_time += cell2.get_d_time();
+                    this_polarity = cell2.get_polarity();
+                    double d_time = cell2.get_d_time();
+                    if(std::isnan(this_polarity) == false) {
+
+                        int bin1 = (int) ((previous_polarity + 1) * 0.5 * n_bins);
+                        int bin2 = (int) ((this_polarity + 1) * 0.5 * n_bins);
+                        if (bin1 == bin2) {
+                            bins[bin2] += d_time;
+                        }else {
+                            int big;
+                            int small;
+                            if(bin1 > bin2){
+                                big  = bin1;
+                                small= bin2;
+                            }else{
+                                big  = bin2;
+                                small= bin1;
+                            }
+                            for (int b = small; b <= big; b++) {
+
+
+                                if (b == small) {
+                                    bins[b] += d_time * std::abs(bin_edge(b, n_bins, RIGHT) - std::min(this_polarity, previous_polarity)) /
+                                               std::abs(this_polarity - previous_polarity);
+
+                                } else if (b == big) {
+                                    bins[b] += d_time * std::abs(
+                                            bin_edge(b, n_bins, LEFT) - std::max(this_polarity, previous_polarity)) /
+                                               std::abs(this_polarity - previous_polarity);
+
+                                } else {
+                                    bins[b] +=
+                                            d_time * std::abs(bin_edge(b, n_bins, LEFT) - bin_edge(b, n_bins, RIGHT)) /
+                                            std::abs(this_polarity - previous_polarity);
+
+                                }
+                            }
+                        }
+                        //bins[(int) ((cell2.get_polarity() + 1) * 0.5 * n_bins)]++;
+                        previous_polarity = this_polarity;
+                    }
                 }
+
             }
+
             if (write_eventdrive) {
                 FileWriter polarity = FileWriter("MT_polarity");
                 polarity.writeParameters(bpnpt[s]);
-                polarity.writeIntArray(bins, n_bins);
+                polarity.writeDoubleArray(bins, n_bins);
             }
-
         }
     }
 

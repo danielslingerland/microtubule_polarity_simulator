@@ -145,6 +145,7 @@ bool Cell::run_event() {
             n_left[MiTus[n].get_state()]  += 1;
         }
     }
+
     //std::cout << std::to_string(run_time)<<"   " <<std::to_string(l_left) <<"   " << std::to_string(l_right) <<"   " << std::to_string(n_right[GROWING])<<"   "  << std::to_string(n_right[SHRINKING])<<"   " << std::to_string(n_left[GROWING]) <<"   " << std::to_string(n_left[SHRINKING])<< "\n";
 
     //-----------------------Calculating AB for ABC-formula------------------------------
@@ -186,6 +187,7 @@ bool Cell::run_event() {
         MiTus[n].run_time(smallest_time);
     }
     run_time -= smallest_time;
+    d_time = smallest_time;
     //-----------------------Returning false when time has run out------------------------------
     if(with_event == N_MICROTUBULES){
         return false;
@@ -259,4 +261,8 @@ void Cell::update_total_lengths(){
 }
 double Cell::get_runtime(){
     return run_time;
+}
+
+double Cell::get_d_time(){
+    return d_time;
 }

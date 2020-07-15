@@ -176,7 +176,7 @@ int main() {
                 FileWriter polarity = FileWriter("MT_polarity");
                 polarity.writeParameters(bpnpt[s]);
                 polarity.writeDoubleArray(bins, n_bins);
-                ave_len.writeDouble(average_length_time);
+                ave_len.writeDouble(average_length_time/total_time);
             }
         }
     }

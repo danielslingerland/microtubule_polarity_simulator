@@ -145,13 +145,14 @@ def d_times_from_times(times):
 
 def polarities_from_path(path):
     polarities = []
-    for i in range(1, 41):
-        data = read_data("MT_polarity"+str(i)+".txt", int, path)
+    for i in range(1, 21):
+        data = read_data("MT_polarity"+str(i)+".txt", float, path)
         #data_man = [abs(j -0.5) for j in data]
         polarities.append(polarity_from_bins(data))
         #plt.plot(data)
         #plt.show()
     return polarities
+
 
 def get_step_time(time, steps):
     step_times = []
@@ -160,157 +161,13 @@ def get_step_time(time, steps):
     return step_times
 
 
-p = polarities_from_path("DATA/speed2/")
+n1 = polarities_from_path("DATA/number_dependent13_7/")
+n2 = polarities_from_path("DATA/number_dependent14_7/")
+l1 = polarities_from_path("DATA/length_dependent14_7/")
 
+plt.plot(n1, "o")
 
+plt.plot(n2, "o")
 
-x = []
-x2 = []
-ax = 0
-
-for i in range(20):
-    x2.append(ax)
-    for i in range(10):
-        x.append(ax)
-    ax += 1.5e-8
-
-
-plt.plot(p[0:20])
+plt.plot(l1, "x")
 plt.show()
-
-d = d_times_from_times(read_multiple_times("times.txt", "DATA/speed2/"))
-plt.plot(x, d[0:200], "x", label="timestep 0.1 s")
-plt.plot(x, d[200:400], "x", label="event driven")
-plt.legend(loc="best")
-plt.xlabel("binding rate (s^{-1} um^{-1})")
-plt.ylabel("simulation time (s)")
-plt.show()
-
-
-speed_counts = read_data("speed_counts.txt", int,  "DATA/speed2/")
-speed_counts_step = []
-for i in range(20):
-    speed_counts_step.append(100000000)
-    speed_counts[i] -= speed_counts_step[i]
-
-plt.plot(x2, speed_counts_step, label="timestep 0.1 s")
-plt.plot(x2, speed_counts, label="event driven")
-plt.legend(loc="best")
-plt.xlabel("binding rate (s^{-1} um^{-1})")
-plt.ylabel("steps")
-plt.show()
-
-fig, ax1 = plt.subplots()
-
-color = 'tab:red'
-ax1.set_xlabel('time (s)')
-ax1.set_ylabel('exp', color=color)
-ax1.plot(x, d[0:200], "x", label="timestep 0.1 s")
-ax1.plot(x, d[200:400], "x", label="event driven")
-ax1.tick_params(axis='y', labelcolor=color)
-
-ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-
-color = 'tab:blue'
-ax2.set_ylabel('sin', color=color)  # we already handled the x-label with ax1
-ax2.plot(x2, speed_counts_step)
-ax2.plot(x2, speed_counts)
-ax2.tick_params(axis='y', labelcolor=color)
-
-fig.tight_layout()  # otherwise the right y-label is slightly clipped
-plt.show()
-
-# lengths = read_data("MT_length_ed2.txt", float, "DATA/verifing/length_ed/")
-# states = read_data("MT_state_ed2.txt", int, "DATA/verifing/length_ed/")
-# lengths_gs = [[],[]]
-# for i in range(len(lengths)):
-#     lengths_gs[states[i]].append(lengths[i])
-# m0_gs = [m0(0.08, 0.16, 50, True)*len(lengths), m0(0.08, 0.16, 50, False)*len(lengths)]
-# create_hist_fit(lengths_gs[0], m0_gs[0], "Growing MTs")
-# create_hist_fit(lengths_gs[1], m0_gs[1], "Shrinking MTs")
-# create_hist_fit(lengths, m0_gs[1]+m0_gs[0], "All MTs")
-# bindings = [0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030]
-#
-# times_event = d_times_from_path("DATA/speed_event/")
-# times_event_long = d_times_from_path("DATA/zero_event/")
-# times_step01 = d_times_from_path("DATA/speed_step01/")
-#
-# polarities_event = polarities_from_path("DATA/speed_event/")
-# polarities_event_long = polarities_from_path("DATA/zero_event/")
-# polarities_step01 = polarities_from_path("DATA/speed_step01/")
-#
-# counts_event = read_data("step_counts.txt", int, "DATA/speed_event/")
-# counts_step01 = read_data("step_counts.txt", int, "DATA/speed_step01/")
-#
-# counts_event_long = []
-#
-# for i in range(1, 21):
-#     counts_event_long.append(sum(read_data("MT_polarity"+str(i)+".txt", int, "DATA/zero_event/")))
-#
-#
-# step_time_event_long = get_step_time(times_event_long, counts_event_long)
-# step_time_event= get_step_time(times_event, counts_event)
-# step_time_step01= get_step_time(times_step01, counts_step01)
-#
-# step_time_event_long[0] = step_time_event[0]
-#
-# plt.plot(bindings[1:21], step_time_event_long[1:21], label="event driven: "+str("{:.2e}".format(sum(counts_event_long[1:21])))+" events")
-# plt.plot(bindings[1:21], step_time_event[1:21], label="event driven: "+str("{:.2e}".format(sum(counts_event[1:21])))+" events")
-# #plt.plot(bindings, times_event_long)
-# plt.xlabel("binding rate (s^{-1} um^{-1})")
-# plt.ylabel("time per step (s)")
-# plt.legend(loc="best")
-# plt.show()
-#
-# plt.plot(bindings[1:21], times_event[1:21], label="event driven")
-# plt.plot(bindings[1:21], times_step01[1:21], label="timestep driven")
-# #plt.plot(bindings, times_event_long)
-# plt.xlabel("binding rate (s^{-1} um^{-1})")
-# plt.ylabel("time (s)")
-# plt.legend(loc="best")
-# plt.show()
-#
-#
-# plt.plot(bindings[1:21], counts_event[1:21], label="event driven")
-# plt.plot(bindings[1:21], counts_step01[1:21], label="timestep driven")
-# #plt.plot(bindings[1:21], counts_event_long[1:21], label="event driven")
-# #plt.plot(bindings, counts_event_long)
-# plt.xlabel("binding rate (s^{-1} um^{-1})")
-# plt.ylabel("steps")
-# plt.legend(loc="best")
-# plt.show()
-#
-# plt.plot(bindings[1:21], polarities_event[1:21], label="event driven")
-# plt.plot(bindings[1:21], polarities_step01[1:21], label="timestep driven")
-# #plt.plot(bindings, polarities_event_long)
-# plt.xlabel("binding rate (s^{-1} um^{-1})")
-# plt.ylabel("steps")
-# plt.legend(loc="best")
-# plt.show()
-#
-# plt.plot(counts_event[1:21], times_event[1:21], "o", label="event driven")
-# plt.plot(counts_step01[1:21], times_step01[1:21], "o", label="timestep driven")
-# #plt.plot(counts_event_long, times_event_long, "o")
-# plt.ylabel("time (s)")
-# plt.xlabel("steps")
-# plt.legend(loc="best")
-# plt.show()
-#plt.savefig("../pictures/overview.png", bbox_inches='tight')
-
-# T_STEP = 1
-# N_MICROTUBULES = 1000
-# R_CATASTROPHE = 0.0016
-# R_RESCUE = 0.0068
-# R_UNBIND = 0.1
-# V_GROW = 0.08
-# V_SHRINK = 0.16
-# P_RIGHT = 0.5
-#
-# l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
-#
-# print(l_bar)
-# R_CATASTROPHE = l_bar**-1*V_GROW
-# print(R_CATASTROPHE)
-# R_RESCUE = 0
-# l_bar = ((R_CATASTROPHE/V_GROW)-(R_RESCUE/V_SHRINK))**-1
-# print(l_bar)

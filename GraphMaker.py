@@ -161,13 +161,16 @@ def get_step_time(time, steps):
     return step_times
 
 
-n1 = polarities_from_path("DATA/number_dependent13_7/")
-n2 = polarities_from_path("DATA/number_dependent14_7/")
-l1 = polarities_from_path("DATA/length_dependent14_7/")
+n1 = polarities_from_path("D:/Documenten_D/Stage_AMOLF/DATA/number_dependent15_7c/")
+l1 = polarities_from_path("D:/Documenten_D/Stage_AMOLF/DATA/length_dependent15_7d/")
 
-plt.plot(n1, "o")
+nl1 = read_data("MT_length.txt", float, "D:/Documenten_D/Stage_AMOLF/DATA/number_dependent15_7c/")
+ll1 = read_data("MT_length.txt", float, "D:/Documenten_D/Stage_AMOLF/DATA/length_dependent15_7d/")
+plt.plot(n1, "o", color="blue")
+plt.plot(l1, "o", color="red")
+plt.show()
 
-plt.plot(n2, "o")
+plt.plot(nl1, "x", color="blue")
+plt.plot(ll1, "x", color="red")
 
-plt.plot(l1, "x")
 plt.show()

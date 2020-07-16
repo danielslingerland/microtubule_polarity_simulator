@@ -42,10 +42,10 @@ int main() {
     double bplpt[20];// = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
     double bpnpt[20];
     int count[20];
-    for(int b = 0; b < 20; b++) {
+    for(int b = 0; b < 40; b++) {
         count[0] = 0;
         bplpt[b] = 0.000000015*b;
-        bpnpt[b] = 0.0000000000000001*pow(10, b*1.0);
+        bpnpt[b] = 0.0000000000000001*pow(10, 5.0+b*0.25);
     }
     FileWriter countwriter = FileWriter("speed_counts");
     countwriter.writeParameters(bpnpt[0]);
@@ -95,7 +95,7 @@ int main() {
     }
     if(eventdrive){
         std::cout << "start event driven \n";
-        double total_time = 1000.0;
+        double total_time = 100000.0;
         double previous_polarity = 0.0;
         double this_polarity;
         int n_bins = 301;

@@ -9,8 +9,9 @@ Cell::Cell(){
 }
 
 
-Cell::Cell(double bplpt){
+Cell::Cell(double bplpt, double p_right){
     r_binding = bplpt;
+    P_RIGHT = p_right;
     for(int n = 0; n < N_MICROTUBULES; n++){
         MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
 
@@ -19,20 +20,20 @@ Cell::Cell(double bplpt){
 
 }
 
-Cell::Cell(double bplpt, double rt, int t){
-    run_time = rt;
-
-    for(int n = 0; n < N_MICROTUBULES; n++){
-        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
-
-    }
-    type = t;
-    if(type == LENGTH) {
-        r_binding = bplpt;
-    }else if(type == NUMBER) {
-        r_binding = bplpt; //* (1 / ((R_CATASTROPHE / V_GROW) - (R_RESCUE / V_SHRINK)));
-    }
-}
+//Cell::Cell(double bplpt, double rt, int t){
+//    run_time = rt;
+//
+//    for(int n = 0; n < N_MICROTUBULES; n++){
+//        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
+//
+//    }
+//    type = t;
+//    if(type == LENGTH) {
+//        r_binding = bplpt;
+//    }else if(type == NUMBER) {
+//        r_binding = bplpt; //* (1 / ((R_CATASTROPHE / V_GROW) - (R_RESCUE / V_SHRINK)));
+//    }
+//}
 
 void Cell::run_timestep(){
 

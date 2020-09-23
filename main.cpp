@@ -35,16 +35,18 @@ double bin_edge(int n, int n_bins, int side){
 }
 
 int main() {
-    bool timestep = false;
-    bool eventdrive = true;
-    bool write_timestep = false;
-    bool write_eventdrive = true;
-    double bplpt[20];// = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
-    double bpnpt[20];
+    bool timestep = true;
+    bool eventdrive = false;
+    bool write_timestep = true;
+    bool write_eventdrive = false;
+    double bplpt[40];// = {0.00000000, 0.00000005, 0.00000008, 0.00000010, 0.00000011, 0.000000115, 0.00000012, 0.000000125, 0.00000013, 0.00000014, 0.00000015, 0.00000016, 0.00000017, 0.00000018, 0.00000019, 0.00000020, 0.00000021, 0.00000023, 0.00000025, 0.00000030};
+    double bpnpt[40];
     int count[20];
-    for(int b = 0; b < 40; b++) {
+    double p_right[41];
+    for(int b = 0; b < 41; b++) {
+        p_right[b] = 0.025*b;
         count[0] = 0;
-        bplpt[b] = 0.000000015*b;
+        bplpt[b] = 1.6e-7;//0.000000015*b;
         bpnpt[b] = 0.0000000000000001*pow(10, 5.0+b*0.25);
     }
     FileWriter countwriter = FileWriter("speed_counts");
@@ -56,7 +58,7 @@ int main() {
 
     if(timestep) {
     std::cout << "start timestep driven \n";
-    for(int r = 0; r < 20; r++){
+    for(int r = 0; r < 40; r++){
 //        int n_bins = 301;
 //        int bins[n_bins];
 //        for(int b = 0; b < n_bins; b++){
@@ -64,11 +66,11 @@ int main() {
 //        }
 
 
-            int t_max = 10000;
+            int t_max = 1000000;
             double lengths_per_timestep[N_MICROTUBULES];
             int states_per_timestep[N_MICROTUBULES];
             for (int cell_run = 0; cell_run < 1; cell_run++) {
-                Cell cell1 = Cell(bplpt[r]);
+                Cell cell1 = Cell(bplpt[r], p_right[r]);
 
                 for (int i = 0; i < t_max; i++) {
                     cell1.run_timestep();
@@ -84,7 +86,7 @@ int main() {
             //std::cout << "\n";
             if (write_timestep) {
                 FileWriter polarity = FileWriter("MT_polarity");
-                polarity.writeParameters(bplpt[r]);
+                polarity.writeParameters(bplpt[r], p_right[r]);
                 //polarity.writeIntArray(bins, n_bins);
             }
         //std::cout << std::to_string(bins[50]) <<"\n";
@@ -107,7 +109,7 @@ int main() {
 
         }
 
-        for(int s = 0; s < 20; s++) {
+        for(int s = 0; s < 40; s++) {
             for(int b = 0; b < n_bins; b++){
                 bins[b] = 0;
             }
@@ -115,7 +117,7 @@ int main() {
 
 
 
-            Cell cell2 = Cell(bpnpt[s], total_time, NUMBER);
+            Cell cell2 = Cell(bpnpt[s], total_time, LENGTH);
             double t_length = 0.0;
             double previous_length = 0.0;
             double average_length_time = 0.0;

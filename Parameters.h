@@ -17,7 +17,7 @@
 #define V_GROW 0.08
 #define V_SHRINK 0.16
 //P: probability
-#define P_RIGHT 0.5
+//#define P_RIGHT 0.5
 
 
 //daniel:

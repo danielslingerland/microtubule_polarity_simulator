@@ -17,6 +17,7 @@ private:
     double run_time;
     int type;
     double d_time;
+    double P_RIGHT;
     bool check_binding(int n);
     void update_total_lengths();
     Microtubule MiTus[N_MICROTUBULES];
@@ -24,8 +25,8 @@ private:
 public:
 
     Cell();
-    Cell(double bplpt);
-    Cell(double bplpt, double rt, int type = LENGTH);
+    Cell(double bplpt, double p_right);
+    //Cell(double bplpt, double rt, int type = LENGTH);
     void run_timestep();
     double get_polarity();
     double get_average_lenth();

@@ -22,7 +22,7 @@ FileWriter::FileWriter(string fname) {
     filename = "../DATA/"+final_name;
 }
 
-void FileWriter::writeParameters(double BINDING_PER_LENGTH_PER_TIME){
+void FileWriter::writeParameters(double BINDING_PER_LENGTH_PER_TIME, double P_RIGHT){
     time_t now = time(0);
     char* dt = ctime(&now);
     ofstream myfile;

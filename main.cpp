@@ -59,11 +59,11 @@ int main() {
     if(timestep) {
     std::cout << "start timestep driven \n";
     for(int r = 0; r < 41; r++){
-//        int n_bins = 301;
-//        int bins[n_bins];
-//        for(int b = 0; b < n_bins; b++){
-//            bins[b] = 0;
-//        }
+        int n_bins = 301;
+        int bins[n_bins];
+        for(int b = 0; b < n_bins; b++){
+            bins[b] = 0;
+        }
 
 
             int t_max = 1000000;
@@ -75,9 +75,9 @@ int main() {
                 for (int i = 0; i < t_max; i++) {
                     cell1.run_timestep();
                     count[r] += 1;
-//                    if (i > 50000) {
-//                        bins[(int) (cell1.get_polarity() * n_bins)]++;
-//                    }
+                    if (i > 50000) {
+                        bins[(int) (((cell1.get_polarity()*0.5)+0.5) * n_bins)]++;
+                    }
 
                 }
                 //printProgress((double) cell_run / 100.0);
@@ -87,7 +87,7 @@ int main() {
             if (write_timestep) {
                 FileWriter polarity = FileWriter("MT_polarity");
                 polarity.writeParameters(bplpt[r], p_right[r]);
-                //polarity.writeIntArray(bins, n_bins);
+                polarity.writeIntArray(bins, n_bins);
             }
         //std::cout << std::to_string(bins[50]) <<"\n";
     }//end run

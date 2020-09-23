@@ -13,7 +13,7 @@ Cell::Cell(double bplpt, double p_right){
     r_binding = bplpt;
     P_RIGHT = p_right;
     for(int n = 0; n < N_MICROTUBULES; n++){
-        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT);
+        MiTus[n] = Microtubule(dasl::mt_rng() < P_RIGHT, P_RIGHT);
 
     }
 

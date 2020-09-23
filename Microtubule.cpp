@@ -10,14 +10,16 @@ Microtubule::Microtubule(){
     length = dasl::mt_rng() * V_GROW * T_STEP;
     side = RIGHT;
     state = GROWING;
+    P_RIGHT = 0.5;
 }
 
 //constructor used at initiation of Cell, side is randomly decided by cell.
-Microtubule::Microtubule(bool r){
+Microtubule::Microtubule(bool r, double p){
     n_guests = 0;
     length = dasl::mt_rng() * V_GROW * T_STEP;
     side = r;
     state = GROWING;
+    P_RIGHT = p;
 }
 
 

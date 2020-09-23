@@ -8,7 +8,7 @@ class Microtubule{
 
 private:
     int n_guests;
-
+    double P_RIGHT;
     double length;
     double min_length_t_step;
     double t_event;
@@ -26,7 +26,7 @@ private:
 public:
 
     Microtubule();
-    Microtubule(bool r);
+    Microtubule(bool r, double p);
     void reset(double l,bool r);
     void process();
     void bind_to_at(Microtubule* host_mt, double pos);

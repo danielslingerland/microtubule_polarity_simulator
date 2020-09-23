@@ -15,7 +15,7 @@ private:
     std::string filename;
 public:
     FileWriter(std::string fname);
-    void writeParameters(double BINDING_PER_LENGTH_PER_TIME);
+    void writeParameters(double BINDING_PER_LENGTH_PER_TIME, double P_RIGHT);
     void writeString(std::string note);
     void writeDouble(double data);
     void writeDoubleArray(double data[], int n_data);

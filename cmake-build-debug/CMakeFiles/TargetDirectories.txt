@@ -1,3 +1,0 @@
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/cmake-build-debug/CMakeFiles/microtubule_polarity_simulator.dir
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/danie/CLionProjects/microtubule_polarity_simulator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
